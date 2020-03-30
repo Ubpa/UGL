@@ -9,3 +9,4 @@
 #include "VertexArray.h"
 #include "VertexBuffer.h"
 #include "ElementBuffer.h"
+#include "Texture2D.h"

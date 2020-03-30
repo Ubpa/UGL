@@ -11,7 +11,7 @@ namespace Ubpa::gl {
 		Read<ElementBuffer, BasicPrimitiveType> primitive;
 		Read<ElementBuffer, GLuint> numPnts;
 
-		ElementBuffer(BasicPrimitiveType primitive, GLuint num, const GLuint* data, BufferUsage usage = BufferUsage::StaticDraw);
+		ElementBuffer(BasicPrimitiveType primitive, size_t num, const GLuint* data, BufferUsage usage = BufferUsage::StaticDraw);
 
 		static void BindReset();
 	};

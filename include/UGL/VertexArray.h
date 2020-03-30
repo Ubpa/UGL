@@ -31,14 +31,14 @@ namespace Ubpa::gl {
 		// attach Format or ElementBuffer first
 		void Draw(const Program* program) const;
 
+		bool IsValid() const noexcept;
+
 		void Clear();
 
 		void Bind() const;
 		static void BindReset();
 
 	private:
-		Read<ElementBuffer, BasicPrimitiveType> primitive;
-		Read<ElementBuffer, GLuint> numPnts;
 		const ElementBuffer* eb{ nullptr };
 	};
 }

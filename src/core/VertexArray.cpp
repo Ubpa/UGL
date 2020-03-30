@@ -43,6 +43,10 @@ void VertexArray::Clear() {
 	id.Clear();
 }
 
+bool VertexArray::IsValid() const noexcept {
+	return id.IsValid() && eb != nullptr;
+}
+
 void VertexArray::Attach(GLuint idx, const VertexBuffer::AttribPointer& ptr) const {
 	Bind();
 	ptr.vbo->Bind();
@@ -80,6 +84,7 @@ void VertexArray::Attach(const ElementBuffer* eb) {
 }
 
 void VertexArray::Draw(const Program* program) const {
+	assert(IsValid());
 	program->Use();
 	Bind();
 	gl::DrawElements(eb->primitive, eb->numPnts);

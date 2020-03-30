@@ -13,6 +13,10 @@ namespace Ubpa::gl {
 		glBindBuffer(static_cast<GLenum>(target), buffer);
 	}
 
+	inline void BindTexture(TextureType target, GLuint texture) {
+		glBindTexture(static_cast<GLenum>(target), texture);
+	}
+
 	inline void BufferData(BufferType target, GLsizeiptr size, const void* data, BufferUsage usage) {
 		glBufferData(static_cast<GLenum>(target), size, data, static_cast<GLenum>(usage));
 	}
@@ -33,12 +37,25 @@ namespace Ubpa::gl {
 		glDrawElements(static_cast<GLenum>(mode), count, static_cast<GLenum>(type), indices);
 	}
 
+	inline void GenerateMipmap(TextureType target) {
+		glGenerateMipmap(static_cast<GLenum>(target));
+	}
+
 	inline void GetProgramiv(GLuint program, ProgramParam pname, GLint* params) {
 		glGetProgramiv(program, static_cast<GLenum>(pname), params);
 	}
 
 	inline void GetShaderiv(GLuint shader, ShaderParam pname, GLint* params) {
 		glGetShaderiv(shader, static_cast<GLenum>(pname), params);
+	}
+
+	// border must be 0
+	inline void TexImage2D(TextureType target, GLint level, PixelDataInternalFormat internalformat, GLsizei width, GLsizei height, PixelDataFormat format, PixelDataType type, const void* pixels) {
+		glTexImage2D(static_cast<GLenum>(target), level, static_cast<GLint>(internalformat), width, height, 0, static_cast<GLenum>(format), static_cast<GLenum>(type), pixels);
+	}
+
+	inline void TexParameteri(TextureType target, TextureParam pname, GLint param) {
+		glTexParameteri(static_cast<GLenum>(target), static_cast<GLenum>(pname), param);
 	}
 
 	inline void VertexAttribPointer(GLuint index, GLint size, DataType type, GLboolean normalized, GLsizei stride, const void* pointer = static_cast<void*>(0)) {
@@ -78,18 +95,18 @@ namespace Ubpa::gl {
 	inline void TexParameterfv(GLenum target, GLenum pname, const GLfloat* params) {
 		glTexParameterfv(target, pname, params);
 	}
-	inline void TexParameteri(GLenum target, GLenum pname, GLint param) {
+	/*inline void TexParameteri(GLenum target, GLenum pname, GLint param) {
 		glTexParameteri(target, pname, param);
-	}
+	}*/
 	inline void TexParameteriv(GLenum target, GLenum pname, const GLint* params) {
 		glTexParameteriv(target, pname, params);
 	}
 	inline void TexImage1D(GLenum target, GLint level, GLint internalformat, GLsizei width, GLint border, GLenum format, GLenum type, const void* pixels) {
 		glTexImage1D(target, level, internalformat, width, border, format, type, pixels);
 	}
-	inline void TexImage2D(GLenum target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const void* pixels) {
+	/*inline void TexImage2D(GLenum target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const void* pixels) {
 		glTexImage2D(target, level, internalformat, width, height, border, format, type, pixels);
-	}
+	}*/
 	inline void DrawBuffer(GLenum buf) {
 		glDrawBuffer(buf);
 	}
@@ -224,9 +241,9 @@ namespace Ubpa::gl {
 	inline void TexSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLenum type, const void* pixels) {
 		glTexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels);
 	}
-	inline void BindTexture(GLenum target, GLuint texture) {
+	/*inline void BindTexture(GLenum target, GLuint texture) {
 		glBindTexture(target, texture);
-	}
+	}*/
 	inline void DeleteTextures(GLsizei n, const GLuint* textures) {
 		glDeleteTextures(n, textures);
 	}
@@ -900,9 +917,9 @@ namespace Ubpa::gl {
 	inline void GetFramebufferAttachmentParameteriv(GLenum target, GLenum attachment, GLenum pname, GLint* params) {
 		glGetFramebufferAttachmentParameteriv(target, attachment, pname, params);
 	}
-	inline void GenerateMipmap(GLenum target) {
+	/*inline void GenerateMipmap(GLenum target) {
 		glGenerateMipmap(target);
-	}
+	}*/
 	inline void BlitFramebuffer(GLint srcX0, GLint srcY0, GLint srcX1, GLint srcY1, GLint dstX0, GLint dstY0, GLint dstX1, GLint dstY1, GLbitfield mask, GLenum filter) {
 		glBlitFramebuffer(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);
 	}

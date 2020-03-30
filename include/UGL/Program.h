@@ -15,6 +15,26 @@ namespace Ubpa::gl {
 
 		void Use() const;
 		void Param(ProgramParam pname, GLint* params) const;
+		GLint GetUniformLocation(const GLchar* name) const;
+
+		void SetTex(const GLchar* name, size_t v) const;
+
+		void SetBool(const GLchar* name, GLboolean v) const;
+		void SetInt(const GLchar* name, GLint v) const;
+		void SetUInt(const GLchar* name, GLint v) const;
+		void SetFloat(const GLchar* name, GLfloat v) const;
+		void SetVecf2(const GLchar* name, const val<GLfloat, 2>& v) const;
+		void SetVecf3(const GLchar* name, const val<GLfloat, 3>& v) const;
+		void SetVec4f(const GLchar* name, const val<GLfloat, 4>& v) const;
+
+		void SetInts(const GLchar* name, GLuint n, const GLint* data) const;
+		void SetUInts(const GLchar* name, GLuint n, const GLuint* data) const;
+		void SetFloats(const GLchar* name, GLuint n, const GLfloat* data) const;
+		void SetVecf2s(const GLchar* name, GLuint n, const GLfloat* data) const;
+		void SetVecf3s(const GLchar* name, GLuint n, const GLfloat* data) const;
+		void SetVecf4s(const GLchar* name, GLuint n, const GLfloat* data) const;
+
+		void SetMatf4(const GLchar* name, const matf4& mat) const;
 
 	private:
 		bool CheckLinkError() const;

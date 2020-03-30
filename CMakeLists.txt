@@ -11,7 +11,7 @@ set(CMAKE_DEBUG_POSTFIX d)
 # 确定 C++ 版本
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
- 
+
 if(MSVC)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /permissive-")
 endif()
@@ -68,6 +68,14 @@ find_package(glfw3 REQUIRED)
 if(TARGET glfw)
 	message(STATUS "glfw3_FOUND: ${glfw3_FOUND}")
 	message(STATUS "glfw3_DIR: ${glfw3_DIR}")
+endif()
+
+message(STATUS "----------")
+if(EXISTS "${PROJECT_SOURCE_DIR}/include/_deps/stb_image.h")
+	message(STATUS "found stb_image.h")
+else()
+	message(FATAL_ERROR "not found stb_image.h in include/_deps/\n"
+		"read README.md for more detail")
 endif()
 
 include_directories(${PROJECT_SOURCE_DIR}/include/_deps/)
