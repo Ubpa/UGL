@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include <UGL/UGL>
+
 using namespace Ubpa;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -76,15 +77,14 @@ int main()
         0, 1, 3,  // first Triangle
         1, 2, 3   // second Triangle
     };
-    unsigned int VBO, VAO, EBO;
+    gl::VertexBuffer vbo(sizeof(vertices), vertices, gl::BufferUsage::StaticDraw);
+    unsigned int VAO, EBO;
     glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
     glGenBuffers(1, &EBO);
     // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
     glBindVertexArray(VAO);
 
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    vbo.Bind(gl::BufferType::ArrayBuffer);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
@@ -135,7 +135,6 @@ int main()
     // optional: de-allocate all resources once they've outlived their purpose:
     // ------------------------------------------------------------------------
     glDeleteVertexArrays(1, &VAO);
-    glDeleteBuffers(1, &VBO);
     glDeleteBuffers(1, &EBO);
 
     // glfw: terminate, clearing all previously allocated GLFW resources.

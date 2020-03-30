@@ -1,5 +1,9 @@
 #pragma once
 
+#include "config.h"
+#include "enums.h"
 #include "gl.h"
+#include "ID.h"
 #include "Program.h"
 #include "Shader.h"
+#include "VertexBuffer.h"
