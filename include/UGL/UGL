@@ -6,5 +6,6 @@
 #include "ID.h"
 #include "Program.h"
 #include "Shader.h"
+#include "VertexArray.h"
 #include "VertexBuffer.h"
 #include "ElementBuffer.h"

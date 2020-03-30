@@ -6,7 +6,6 @@ using namespace Ubpa;
 using namespace Ubpa::gl;
 using namespace std;
 
-
 Program::Program(const GLchar* vs_src, const GLchar* fs_src) : Program{
 	Shader{ShaderType::VertexShader, vs_src},
 	Shader{ShaderType::FragmentShader, fs_src}

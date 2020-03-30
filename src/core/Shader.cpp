@@ -10,7 +10,7 @@ Shader::Shader(ShaderType type)
 	: type{ type } { }
 
 Shader::Shader(ShaderType type, const GLchar* src)
-	: type{type}, id(gl::CreateShader(type))
+	: type{ type }, id(gl::CreateShader(type))
 {
 	gl::ShaderSource(id, 1, &src, NULL);
 	gl::CompileShader(id);

@@ -15,10 +15,11 @@ const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
 const char* vertexShaderSource = "#version 330 core\n"
-"layout (location = 0) in vec3 aPos;\n"
+"layout (location = 0) in vec3 va0;\n"
+"layout (location = 1) in vec3 va1;\n"
 "void main()\n"
 "{\n"
-"   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+"   gl_Position = vec4(va0+va1, 1.0);\n"
 "}\0";
 const char* fragmentShaderSource = "#version 330 core\n"
 "out vec4 FragColor;\n"
@@ -73,23 +74,27 @@ int main()
         -0.5f, -0.5f, 0.0f,  // bottom left
         -0.5f,  0.5f, 0.0f   // top left 
     };
+    float offset[] = {
+         0.0f,  0.1f, 0.0f,  // top right
+         0.0f, -0.1f, 0.0f,  // bottom right
+         0.0f,  0.0f, 0.0f,  // bottom left
+         0.0f,  0.0f, 0.0f   // top left 
+    };
     unsigned int indices[] = {  // note that we start from 0!
         0, 1, 3,  // first Triangle
         1, 2, 3   // second Triangle
     };
-    gl::VertexBuffer vbo(sizeof(vertices), vertices, gl::BufferUsage::StaticDraw);
+    gl::VertexBuffer vbo0(sizeof(vertices), vertices, gl::BufferUsage::StaticDraw);
+    auto attrptr0 = vbo0.AttrPtr(3, gl::DataType::Float, GL_FALSE, 3 * sizeof(float));
+    gl::VertexBuffer vbo1(sizeof(offset), offset, gl::BufferUsage::StaticDraw);
+    auto attrptr1 = vbo1.AttrPtr(3, gl::DataType::Float, GL_FALSE, 3 * sizeof(float));
     gl::ElementBuffer ebo(sizeof(indices), indices, gl::BufferUsage::StaticDraw);
 
-    unsigned int VAO;
-    glGenVertexArrays(1, &VAO);
-    // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
-    glBindVertexArray(VAO);
+    gl::VertexArray vao;
+    vao.Attach(0, attrptr0);
+    vao.Attach(1, attrptr1);
 
-    vbo.Bind();
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-
+    vao.Bind();
     ebo.Bind();
 
     // note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
@@ -100,7 +105,7 @@ int main()
 
     // You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
     // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
-    glBindVertexArray(0);
+    gl::VertexArray::BindReset();
 
 
     // uncomment this call to draw in wireframe polygons.
@@ -121,7 +126,7 @@ int main()
 
         // draw our first triangle
         shaderProgram.Use();
-        glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+        vao.Bind(); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
         //glDrawArrays(GL_TRIANGLES, 0, 6);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         // glBindVertexArray(0); // no need to unbind it every time 
@@ -134,7 +139,6 @@ int main()
 
     // optional: de-allocate all resources once they've outlived their purpose:
     // ------------------------------------------------------------------------
-    glDeleteVertexArrays(1, &VAO);
 
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------

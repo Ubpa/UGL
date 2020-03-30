@@ -36,6 +36,10 @@ namespace Ubpa::gl {
 		glGetShaderiv(shader, static_cast<GLenum>(pname), params);
 	}
 
+	inline void VertexAttribPointer(GLuint index, GLint size, DataType type, GLboolean normalized, GLsizei stride, const void* pointer) {
+		glVertexAttribPointer(index, size, static_cast<GLenum>(type), normalized, stride, pointer);
+	}
+
 	inline void Viewport(point<GLint, 2> xy, GLsizei width, GLsizei height) {
 		glViewport(xy[0], xy[1], width, height);
 	}
@@ -642,9 +646,9 @@ namespace Ubpa::gl {
 	inline void VertexAttrib4usv(GLuint index, const GLushort* v) {
 		glVertexAttrib4usv(index, v);
 	}
-	inline void VertexAttribPointer(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void* pointer) {
+	/*inline void VertexAttribPointer(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void* pointer) {
 		glVertexAttribPointer(index, size, type, normalized, stride, pointer);
-	}
+	}*/
 #endif
 
 #ifdef GL_VERSION_2_1
