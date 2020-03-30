@@ -84,18 +84,17 @@ int main()
         0, 1, 3,  // first Triangle
         1, 2, 3   // second Triangle
     };
+    gl::VertexArray::Format format;
     gl::VertexBuffer vbo0(sizeof(vertices), vertices, gl::BufferUsage::StaticDraw);
-    auto attrptr0 = vbo0.AttrPtr(3, gl::DataType::Float, GL_FALSE, 3 * sizeof(float));
     gl::VertexBuffer vbo1(sizeof(offset), offset, gl::BufferUsage::StaticDraw);
+    auto attrptr0 = vbo0.AttrPtr(3, gl::DataType::Float, GL_FALSE, 3 * sizeof(float));
     auto attrptr1 = vbo1.AttrPtr(3, gl::DataType::Float, GL_FALSE, 3 * sizeof(float));
-    gl::ElementBuffer ebo(sizeof(indices), indices, gl::BufferUsage::StaticDraw);
+    gl::ElementBuffer ebo(gl::BasicPrimitiveType::Triangles, 2, indices, gl::BufferUsage::StaticDraw);
+    format.attrptrs.push_back(attrptr0);
+    format.attrptrs.push_back(attrptr1);
+    format.eb = &ebo;
 
-    gl::VertexArray vao;
-    vao.Attach(0, attrptr0);
-    vao.Attach(1, attrptr1);
-
-    vao.Bind();
-    ebo.Bind();
+    gl::VertexArray vao({ 0,1 }, format);
 
     // note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
     gl::VertexBuffer::BindReset();
@@ -124,12 +123,7 @@ int main()
         gl::ClearColor({ 0.2f, 0.3f, 0.3f, 1.0f });
         gl::Clear(gl::BufferSelectBit::ColorBufferBit);
 
-        // draw our first triangle
-        shaderProgram.Use();
-        vao.Bind(); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
-        //glDrawArrays(GL_TRIANGLES, 0, 6);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-        // glBindVertexArray(0); // no need to unbind it every time 
+        vao.Draw(&shaderProgram);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------

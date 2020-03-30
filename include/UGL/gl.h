@@ -2,6 +2,7 @@
 
 #include "config.h"
 #include "enums.h"
+#include "traits.h"
 
 #include <UGM/UGM>
 
@@ -28,6 +29,10 @@ namespace Ubpa::gl {
 		return glCreateShader(static_cast<GLenum>(type));
 	}
 
+	inline void DrawElements(BasicPrimitiveType mode, GLsizei count, IndexType type = IndexType::UnsignedInt, const void* indices = nullptr) {
+		glDrawElements(static_cast<GLenum>(mode), count, static_cast<GLenum>(type), indices);
+	}
+
 	inline void GetProgramiv(GLuint program, ProgramParam pname, GLint* params) {
 		glGetProgramiv(program, static_cast<GLenum>(pname), params);
 	}
@@ -36,7 +41,7 @@ namespace Ubpa::gl {
 		glGetShaderiv(shader, static_cast<GLenum>(pname), params);
 	}
 
-	inline void VertexAttribPointer(GLuint index, GLint size, DataType type, GLboolean normalized, GLsizei stride, const void* pointer) {
+	inline void VertexAttribPointer(GLuint index, GLint size, DataType type, GLboolean normalized, GLsizei stride, const void* pointer = static_cast<void*>(0)) {
 		glVertexAttribPointer(index, size, static_cast<GLenum>(type), normalized, stride, pointer);
 	}
 
@@ -195,9 +200,9 @@ namespace Ubpa::gl {
 	inline void DrawArrays(GLenum mode, GLint first, GLsizei count) {
 		glDrawArrays(mode, first, count);
 	}
-	inline void DrawElements(GLenum mode, GLsizei count, GLenum type, const void* indices) {
+	/*inline void DrawElements(GLenum mode, GLsizei count, GLenum type, const void* indices) {
 		glDrawElements(mode, count, type, indices);
-	}
+	}*/
 	inline void PolygonOffset(GLfloat factor, GLfloat units) {
 		glPolygonOffset(factor, units);
 	}

@@ -8,7 +8,10 @@
 namespace Ubpa::gl {
 	class ElementBuffer : public Buffer {
 	public:
-		ElementBuffer(GLsizeiptr size, const void* data, BufferUsage usage = BufferUsage::StaticDraw);
+		Read<ElementBuffer, BasicPrimitiveType> primitive;
+		Read<ElementBuffer, GLuint> numPnts;
+
+		ElementBuffer(BasicPrimitiveType primitive, GLuint num, const GLuint* data, BufferUsage usage = BufferUsage::StaticDraw);
 
 		static void BindReset();
 	};

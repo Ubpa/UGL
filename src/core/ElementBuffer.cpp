@@ -6,7 +6,10 @@ using namespace Ubpa;
 using namespace Ubpa::gl;
 using namespace std;
 
-ElementBuffer::ElementBuffer(GLsizeiptr size, const void* data, BufferUsage usage) : Buffer{ BufferType::ElementArrayBuffer, size, data, usage} {}
+ElementBuffer::ElementBuffer(BasicPrimitiveType primitive, GLuint num, const GLuint* data, BufferUsage usage)
+	: primitive{ primitive },
+	numPnts{ num * traits<BasicPrimitiveType>::point_num(primitive) },
+	Buffer{ BufferType::ElementArrayBuffer, num * traits<BasicPrimitiveType>::point_num(primitive) * sizeof(GLuint), data, usage} {}
 
 void ElementBuffer::BindReset() {
 	gl::BindBuffer(BufferType::ElementArrayBuffer, 0);
