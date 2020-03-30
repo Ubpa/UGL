@@ -57,7 +57,7 @@ int main()
         // render
         // ------
         gl::ClearColor({ 0.2f, 0.3f, 0.3f, 1.0f });
-        gl::Clear(gl::Clear_Mask::COLOR_BUFFER);
+        gl::Clear(gl::BufferSelectBit::ColorBufferBit);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
