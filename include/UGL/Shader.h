@@ -8,10 +8,13 @@
 #include <string>
 
 namespace Ubpa::gl {
+	class Program;
+
 	class Shader {
+		friend class Program;
+
 	public:
 		Read<Shader, std::string> path;
-		Read<Shader, ID> id{ static_cast<GLuint>(0) }; // 0 is invalid
 		Read<Shader, ShaderType> type;
 
 		Shader(ShaderType type);
@@ -20,7 +23,7 @@ namespace Ubpa::gl {
 		Shader& operator=(Shader&& shader) noexcept;
 		~Shader();
 
-		bool IsValid() const noexcept { return id->IsValid(); }
+		bool IsValid() const noexcept { return id.IsValid(); }
 
 		void Clear();
 
@@ -28,5 +31,7 @@ namespace Ubpa::gl {
 
 	private:
 		bool CheckCompileError() const;
+
+		ID id{ static_cast<GLuint>(0) }; // 0 is invalid
 	};
 }

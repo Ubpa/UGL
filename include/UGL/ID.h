@@ -30,12 +30,12 @@ namespace Ubpa::gl {
 			return data != static_cast<GLuint>(0);
 		}
 
-		operator GLuint*() noexcept {
+		GLuint* init_ptr() noexcept {
 			assert(!IsValid());
 			return &data;
 		}
 
-		operator const GLuint*() const noexcept {
+		const GLuint* del_ptr() const noexcept {
 			assert(IsValid());
 			return &data;
 		}
