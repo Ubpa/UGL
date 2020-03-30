@@ -1,7 +1,7 @@
 #pragma once
 
 #include "gl.h"
-#include "ID.h"
+#include "Obj.h"
 
 #include <UDP/Basic/Read.h>
 
@@ -10,7 +10,7 @@
 namespace Ubpa::gl {
 	class Program;
 
-	class Shader {
+	class Shader : public Obj {
 		friend class Program;
 
 	public:
@@ -23,15 +23,11 @@ namespace Ubpa::gl {
 		Shader& operator=(Shader&& shader) noexcept;
 		~Shader();
 
-		bool IsValid() const noexcept { return id.IsValid(); }
-
 		void Clear();
 
 		void Param(ShaderParam pname, GLint* params) const;
 
 	private:
 		bool CheckCompileError() const;
-
-		ID id{ static_cast<GLuint>(0) }; // 0 is invalid
 	};
 }

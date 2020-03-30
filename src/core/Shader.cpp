@@ -10,7 +10,7 @@ Shader::Shader(ShaderType type)
 	: type{ type } { }
 
 Shader::Shader(ShaderType type, const GLchar* src)
-	: type{ type }, id(gl::CreateShader(type))
+	: Obj{ gl::CreateShader(type) }, type { type }
 {
 	gl::ShaderSource(id, 1, &src, NULL);
 	gl::CompileShader(id);
@@ -20,7 +20,7 @@ Shader::Shader(ShaderType type, const GLchar* src)
 }
 
 Shader::Shader(Shader&& shader) noexcept
-	: id{ std::move(shader.id) }, path{ std::move(shader.path) }, type{ shader.type } {}
+	: Obj{ std::move(shader.id) }, path{ std::move(shader.path) }, type{ shader.type } {}
 
 Shader& Shader::operator=(Shader&& shader) noexcept {
 	id = move(shader.id);

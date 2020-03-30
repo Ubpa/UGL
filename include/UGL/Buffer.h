@@ -1,12 +1,12 @@
 #pragma once
 
 #include "gl.h"
-#include "ID.h"
+#include "Obj.h"
 
 #include <UDP/Basic/Read.h>
 
 namespace Ubpa::gl {
-	class Buffer {
+	class Buffer : public Obj {
 	public:
 		Buffer(BufferType target, GLsizeiptr size, const void* data, BufferUsage usage = BufferUsage::StaticDraw);
 

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "gl.h"
-#include "ID.h"
+#include "Obj.h"
 #include "VertexBuffer.h"
 
 #include <vector>
@@ -10,7 +10,7 @@ namespace Ubpa::gl {
 	class ElementBuffer;
 	class Program;
 
-	class VertexArray {
+	class VertexArray : public Obj {
 	public:
 		struct Format {
 			std::vector<VertexBuffer::AttribPointer> attrptrs;
@@ -25,8 +25,6 @@ namespace Ubpa::gl {
 		VertexArray(VertexArray&& va) noexcept;
 		VertexArray& operator=(VertexArray&& va) noexcept;
 
-		bool IsValid() const noexcept { return id.IsValid(); }
-
 		void Attach(GLuint idx, const VertexBuffer::AttribPointer& ptr) const;
 		void Attach(const ElementBuffer* eb);
 		void Attach(const std::vector<GLuint>& indices, const Format& format);
@@ -40,6 +38,5 @@ namespace Ubpa::gl {
 
 	private:
 		const ElementBuffer* eb{ nullptr };
-		ID id{ static_cast<GLuint>(0) }; // 0 is invalid
 	};
 }

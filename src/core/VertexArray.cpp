@@ -30,10 +30,11 @@ VertexArray::VertexArray(const std::vector<GLuint>& indices, const Format& forma
 }
 
 VertexArray::VertexArray(VertexArray&& va) noexcept
-	: id{ move(va.id) } {}
+	: Obj{ move(va.id) }, eb{ va.eb } {}
 
 VertexArray& VertexArray::operator=(VertexArray&& va) noexcept {
 	id = move(va.id);
+	eb = va.eb;
 	return *this;
 }
 

@@ -3,21 +3,19 @@
 #include "Shader.h"
 
 namespace Ubpa::gl {
-	class Program {
+	class Program : public Obj {
 	public:
-		Program(Shader&& vs, Shader&& fs);
-		Program(const GLchar* vs_src, const GLchar* fs_src);
+		Program(const Shader* vs, const Shader* fs);
+		~Program();
 
-		Read<Program, Shader> vs;
-		Read<Program, Shader> fs;
-		Read<Program, Shader> gs;
+		Program(Program&& p) noexcept : Obj{ p.id } {}
+		Program& operator=(Program&& p) noexcept;
 
-		bool IsValid() const noexcept { return id.IsValid(); }
+		void Clear();
 		void Use() const;
 		void Param(ProgramParam pname, GLint* params) const;
 
 	private:
 		bool CheckLinkError() const;
-		ID id{ static_cast<GLuint>(0) }; // 0 is invalid
 	};
 }
