@@ -70,7 +70,7 @@ namespace Ubpa::gl {
 
 file_list = [ f for f in listdir('../src') if isfile(join('../src', f)) ]
 enum_file = open('../../../include/UGL/enums.h', 'w')
-enum_file.write('#pragma once\n\n')
+enum_file.write('#pragma once\n\n#include "detail/enum_boolean_op.h"\n\n')
 
 for file_name in file_list:
   file_base_name = file_name[:-4]

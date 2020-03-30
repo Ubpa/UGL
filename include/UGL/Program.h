@@ -35,6 +35,7 @@ namespace Ubpa::gl {
 		void SetVecf4s(const GLchar* name, GLuint n, const GLfloat* data) const;
 
 		void SetMatf4(const GLchar* name, const matf4& mat) const;
+		void SetMatf4(const GLchar* name, const transformf& tsfm) const;
 
 	private:
 		bool CheckLinkError() const;

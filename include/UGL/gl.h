@@ -33,8 +33,16 @@ namespace Ubpa::gl {
 		return glCreateShader(static_cast<GLenum>(type));
 	}
 
+	inline void Disable(Capability cap) {
+		glDisable(static_cast<GLenum>(cap));
+	}
+
 	inline void DrawElements(BasicPrimitiveType mode, GLsizei count, IndexType type = IndexType::UnsignedInt, const void* indices = nullptr) {
 		glDrawElements(static_cast<GLenum>(mode), count, static_cast<GLenum>(type), indices);
+	}
+
+	inline void Enable(Capability cap) {
+		glEnable(static_cast<GLenum>(cap));
 	}
 
 	inline void GenerateMipmap(TextureType target) {
@@ -131,12 +139,12 @@ namespace Ubpa::gl {
 	inline void DepthMask(GLboolean flag) {
 		glDepthMask(flag);
 	}
-	inline void Disable(GLenum cap) {
+	/*inline void Disable(GLenum cap) {
 		glDisable(cap);
 	}
 	inline void Enable(GLenum cap) {
 		glEnable(cap);
-	}
+	}*/
 	inline void Finish(void) {
 		glFinish();
 	}

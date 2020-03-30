@@ -130,3 +130,7 @@ void Program::SetVecf4s(const GLchar* name, GLuint n, const GLfloat* data) const
 void Program::SetMatf4(const GLchar* name, const matf4& mat) const {
 	gl::UniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, mat.data());
 }
+
+void Program::SetMatf4(const GLchar* name, const transformf& tsfm) const {
+	gl::UniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, tsfm.data());
+}
