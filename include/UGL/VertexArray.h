@@ -37,6 +37,8 @@ namespace Ubpa::gl {
 		static void BindReset();
 
 	private:
+		Read<ElementBuffer, BasicPrimitiveType> primitive;
+		Read<ElementBuffer, GLuint> numPnts;
 		const ElementBuffer* eb{ nullptr };
 	};
 }

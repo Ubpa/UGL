@@ -1,6 +1,8 @@
 #include <UGL/Shader.h>
 
 #include <iostream>
+#include <fstream>
+#include <sstream>
 
 using namespace Ubpa;
 using namespace Ubpa::gl;
@@ -9,14 +11,48 @@ using namespace std;
 Shader::Shader(ShaderType type)
 	: type{ type } { }
 
-Shader::Shader(ShaderType type, const GLchar* src)
-	: Obj{ gl::CreateShader(type) }, type { type }
-{
-	gl::ShaderSource(id, 1, &src, NULL);
+bool Shader::InitPath(const std::string& path) {
+	// open files
+	ifstream file;
+	file.open(path);
+	if (!file.is_open()) {
+		std::cerr << "ERROR::Shader::InitPath(const string&):" << endl
+			<< "    open fail" << endl
+			<< "    - path: " << path << endl;
+		return false;
+	}
+	std::stringstream ss;
+	// read file's buffer contents into streams
+	ss << file.rdbuf();
+	// close file handlers
+	file.close();
+	// convert stream into string
+	bool rst = InitSrc(ss.str());
+	this->path = path; // set path after InitSrc()
+	return rst;
+}
+
+bool Shader::InitSrc(const std::string& src) {
+	Clear();
+
+	id = gl::CreateShader(type);
+
+	auto cstr = src.c_str();
+	gl::ShaderSource(id, 1, &cstr, NULL);
 	gl::CompileShader(id);
 
-	if (!CheckCompileError())
+	if (!CheckCompileError()) {
 		Clear();
+		return false;
+	}
+
+	return true;
+}
+
+Shader::Shader(ShaderType type, const std::string& path)
+	: type{ type }
+{
+	InitPath(path);
 }
 
 Shader::Shader(Shader&& shader) noexcept

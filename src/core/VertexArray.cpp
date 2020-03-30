@@ -46,7 +46,7 @@ void VertexArray::Clear() {
 void VertexArray::Attach(GLuint idx, const VertexBuffer::AttribPointer& ptr) const {
 	Bind();
 	ptr.vbo->Bind();
-	gl::VertexAttribPointer(idx, ptr.size, ptr.type, ptr.normalized, ptr.stride, (void*)0);
+	gl::VertexAttribPointer(idx, ptr.size, ptr.type, ptr.normalized, ptr.stride, ptr.pointer);
 	gl::EnableVertexAttribArray(idx);
 	BindReset();
 	ptr.vbo->BindReset();
@@ -61,7 +61,7 @@ void VertexArray::Attach(const std::vector<GLuint>& indices, const Format& forma
 	for (size_t i = 0; i < indices.size(); i++) {
 		const auto& attrptr = format.attrptrs[i];
 		attrptr.vbo->Bind();
-		gl::VertexAttribPointer(indices[i], attrptr.size, attrptr.type, attrptr.normalized, attrptr.stride);
+		gl::VertexAttribPointer(indices[i], attrptr.size, attrptr.type, attrptr.normalized, attrptr.stride, attrptr.pointer);
 		gl::EnableVertexAttribArray(indices[i]);
 	}
 	format.eb->Bind();

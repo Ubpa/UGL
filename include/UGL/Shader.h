@@ -15,13 +15,16 @@ namespace Ubpa::gl {
 
 	public:
 		Read<Shader, std::string> path;
-		Read<Shader, ShaderType> type;
+		Read<Shader, const ShaderType> type;
 
 		Shader(ShaderType type);
-		Shader(ShaderType type, const GLchar* src);
+		Shader(ShaderType type, const std::string& path);
 		Shader(Shader&& shader) noexcept;
 		Shader& operator=(Shader&& shader) noexcept;
 		~Shader();
+
+		bool InitPath(const std::string& path);
+		bool InitSrc(const std::string& src);
 
 		void Clear();
 

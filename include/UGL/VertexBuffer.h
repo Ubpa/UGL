@@ -14,6 +14,7 @@ namespace Ubpa::gl {
 			DataType type;
 			GLboolean normalized;
 			GLsizei stride;
+			const void* pointer;
 		};
 
 	public:
@@ -23,9 +24,10 @@ namespace Ubpa::gl {
 			GLint size,
 			DataType type,
 			GLboolean normalized,
-			GLsizei stride) const noexcept
+			GLsizei stride,
+			const void* pointer = (void*)(0)) const noexcept
 		{
-			return { this, size, type, normalized, stride };
+			return { this, size, type, normalized, stride, pointer };
 		}
 
 		static GLint MaxVertexAttribs();
