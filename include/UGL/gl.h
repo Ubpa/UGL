@@ -8,7 +8,11 @@
 namespace Ubpa::gl {
 	// ================================ optimize ================================
 
-	inline void BufferData(BufferBinding target, GLsizeiptr size, const void* data, BufferUsage usage) {
+	inline void BindBuffer(BufferType target, GLuint buffer) {
+		glBindBuffer(static_cast<GLenum>(target), buffer);
+	}
+
+	inline void BufferData(BufferType target, GLsizeiptr size, const void* data, BufferUsage usage) {
 		glBufferData(static_cast<GLenum>(target), size, data, static_cast<GLenum>(usage));
 	}
 
@@ -18,6 +22,10 @@ namespace Ubpa::gl {
 
 	inline void ClearColor(rgba<GLfloat> c) {
 		glClearColor(c[0], c[1], c[2], c[3]);
+	}
+
+	inline GLuint CreateShader(ShaderType type) {
+		return glCreateShader(static_cast<GLenum>(type));
 	}
 
 	inline void GetProgramiv(GLuint program, ProgramParam pname, GLint* params) {
@@ -322,9 +330,9 @@ namespace Ubpa::gl {
 	inline void GetQueryObjectuiv(GLuint id, GLenum pname, GLuint* params) {
 		glGetQueryObjectuiv(id, pname, params);
 	}
-	inline void BindBuffer(GLenum target, GLuint buffer) {
+	/*inline void BindBuffer(GLenum target, GLuint buffer) {
 		glBindBuffer(target, buffer);
-	}
+	}*/
 	inline void DeleteBuffers(GLsizei n, const GLuint* buffers) {
 		glDeleteBuffers(n, buffers);
 	}
@@ -385,9 +393,9 @@ namespace Ubpa::gl {
 	inline GLuint CreateProgram(void) {
 		return glCreateProgram();
 	}
-	inline GLuint CreateShader(GLenum type) {
+	/*inline GLuint CreateShader(GLenum type) {
 		return glCreateShader(type);
-	}
+	}*/
 	inline void DeleteProgram(GLuint program) {
 		glDeleteProgram(program);
 	}
