@@ -33,6 +33,8 @@ namespace Ubpa::gl {
 
 		void Clear();
 
+		void Param(ShaderParam pname, GLint* params) const;
+
 	private:
 		bool CheckCompileError() const;
 	};

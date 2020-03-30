@@ -15,6 +15,7 @@ namespace Ubpa::gl {
 
 		bool IsValid() const noexcept { return ID != 0; }
 		void Use() const;
+		void Param(ProgramParam pname, GLint* params) const;
 
 	private:
 		bool CheckLinkError() const;

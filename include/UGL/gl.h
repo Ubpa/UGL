@@ -20,6 +20,14 @@ namespace Ubpa::gl {
 		glClearColor(c[0], c[1], c[2], c[3]);
 	}
 
+	inline void GetProgramiv(GLuint program, ProgramParam pname, GLint* params) {
+		glGetProgramiv(program, static_cast<GLenum>(pname), params);
+	}
+
+	inline void GetShaderiv(GLuint shader, ShaderParam pname, GLint* params) {
+		glGetShaderiv(shader, static_cast<GLenum>(pname), params);
+	}
+
 	inline void Viewport(point<GLint, 2> xy, GLsizei width, GLsizei height) {
 		glViewport(xy[0], xy[1], width, height);
 	}
@@ -407,15 +415,15 @@ namespace Ubpa::gl {
 	inline GLint GetAttribLocation(GLuint program, const GLchar* name) {
 		return glGetAttribLocation(program, name);
 	}
-	inline void GetProgramiv(GLuint program, GLenum pname, GLint* params) {
+	/*inline void GetProgramiv(GLuint program, GLenum pname, GLint* params) {
 		glGetProgramiv(program, pname, params);
-	}
+	}*/
 	inline void GetProgramInfoLog(GLuint program, GLsizei bufSize, GLsizei* length, GLchar* infoLog) {
 		glGetProgramInfoLog(program, bufSize, length, infoLog);
 	}
-	inline void GetShaderiv(GLuint shader, GLenum pname, GLint* params) {
+	/*inline void GetShaderiv(GLuint shader, GLenum pname, GLint* params) {
 		glGetShaderiv(shader, pname, params);
-	}
+	}*/
 	inline void GetShaderInfoLog(GLuint shader, GLsizei bufSize, GLsizei* length, GLchar* infoLog) {
 		glGetShaderInfoLog(shader, bufSize, length, infoLog);
 	}

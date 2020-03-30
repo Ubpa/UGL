@@ -32,11 +32,16 @@ Program::Program(Shader&& vs_, Shader&& fs_)
 	gl::LinkProgram(ID);
 }
 
+void Program::Param(ProgramParam pname, GLint* params) const {
+	assert(IsValid());
+	gl::GetProgramiv(ID, pname, params);
+}
+
 bool Program::CheckLinkError() const {
 	assert(IsValid());
 
 	GLint success;
-	gl::GetProgramiv(ID, GL_LINK_STATUS, &success);
+	Param(ProgramParam::LinkStatus, &success);
 	if (success)
 		return true;
 

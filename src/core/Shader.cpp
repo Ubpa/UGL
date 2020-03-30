@@ -18,8 +18,8 @@ Shader::Shader(Type type, const GLchar* src)
 		return;
 	}
 
-	glShaderSource(ID, 1, &src, NULL);
-	glCompileShader(ID);
+	gl::ShaderSource(ID, 1, &src, NULL);
+	gl::CompileShader(ID);
 
 	if (!CheckCompileError())
 		Clear();
@@ -43,7 +43,7 @@ Shader& Shader::operator=(Shader&& shader) noexcept {
 }
 
 void Shader::Clear() {
-	glDeleteShader(ID);
+	gl::DeleteShader(ID);
 	ID = static_cast<GLuint>(0);
 	path->clear();
 	type = Type::EMPTY;
@@ -53,11 +53,16 @@ Shader::~Shader() {
 	Clear();
 }
 
+void Shader::Param(ShaderParam pname, GLint* params) const {
+	assert(IsValid());
+	gl::GetShaderiv(ID, pname, params);
+}
+
 bool Shader::CheckCompileError() const {
 	assert(IsValid());
 
 	GLint success;
-	glGetShaderiv(ID, GL_COMPILE_STATUS, &success);
+	Param(ShaderParam::CompileStatus, &success);
 	if (success)
 		return true;
 
