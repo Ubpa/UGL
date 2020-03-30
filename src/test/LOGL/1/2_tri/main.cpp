@@ -62,9 +62,7 @@ int main()
 
     // build and compile our shader program
     // ------------------------------------
-    gl::Shader vertexShader(gl::Shader::Type::VERTEX, vertexShaderSource);
-    gl::Shader fragmentShader(gl::Shader::Type::FRAGMENT, fragmentShaderSource);
-    gl::Program shaderProgram(vertexShader, fragmentShader);
+    gl::Program shaderProgram(vertexShaderSource, fragmentShaderSource);
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------

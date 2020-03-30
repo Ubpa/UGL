@@ -16,14 +16,17 @@ namespace Ubpa::gl {
 			//TESS_EVALUATION = GL_TESS_EVALUATION_SHADER,
 			GEOMETRY = GL_GEOMETRY_SHADER,
 			FRAGMENT = GL_FRAGMENT_SHADER,
+			EMPTY = 0,
 		};
 
 		Read<Shader, std::string> path;
 		Read<Shader, GLuint> ID{ static_cast<GLuint>(0) }; // 0 is invalid
-		Read<Shader, Type> type;
+		Read<Shader, Type> type{ Type::EMPTY };
 
+		Shader() = default;
 		Shader(Type type, const GLchar* src);
 		Shader(Shader&& shader) noexcept;
+		Shader& operator=(Shader&& shader) noexcept;
 		~Shader();
 
 		bool IsValid() const noexcept { return ID != 0; }

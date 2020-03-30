@@ -30,12 +30,23 @@ Shader::Shader(Shader&& shader) noexcept
 {
 	shader.ID = static_cast<GLuint>(0);
 	shader.path->clear();
+	shader.type = Type::EMPTY;
+}
+
+Shader& Shader::operator=(Shader&& shader) noexcept {
+	ID = shader.ID;
+	path = shader.path;
+	shader.ID = static_cast<GLuint>(0);
+	shader.path->clear();
+	shader.type = Type::EMPTY;
+	return *this;
 }
 
 void Shader::Clear() {
 	glDeleteShader(ID);
 	ID = static_cast<GLuint>(0);
 	path->clear();
+	type = Type::EMPTY;
 }
 
 Shader::~Shader() {
