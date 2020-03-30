@@ -72,6 +72,10 @@ endif()
 
 include_directories(${PROJECT_SOURCE_DIR}/include/_deps/)
 
+set(UBPA_UGL_GLAD TRUE)
+
+Ubpa_AddDep(UGM 0.3.6)
+
 Ubpa_AddSubDirsRec(src)
 
 Ubpa_Export(DIRECTORIES "include/UGL")
