@@ -24,6 +24,8 @@ Buffer::Buffer(Buffer&& buf) noexcept
 	usage{ buf.usage } {}
 
 Buffer& Buffer::operator=(Buffer&& buf) noexcept {
+	Clear();
+
 	target = move(buf.target);
 	id = move(buf.id);
 	usage = move(buf.usage);

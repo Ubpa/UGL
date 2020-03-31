@@ -59,6 +59,7 @@ Shader::Shader(Shader&& shader) noexcept
 	: Obj{ std::move(shader.id) }, path{ std::move(shader.path) }, type{ shader.type } {}
 
 Shader& Shader::operator=(Shader&& shader) noexcept {
+	Clear();
 	id = move(shader.id);
 	path = move(shader.path);
 	return *this;

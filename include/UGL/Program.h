@@ -3,6 +3,8 @@
 #include "Shader.h"
 
 namespace Ubpa::gl {
+	class Texture;
+
 	class Program : public Obj {
 	public:
 		Program(const Shader* vs, const Shader* fs, const Shader* gs = nullptr);
@@ -16,6 +18,8 @@ namespace Ubpa::gl {
 		void Use() const;
 		void Param(ProgramParam pname, GLint* params) const;
 		GLint GetUniformLocation(const GLchar* name) const;
+
+		void Active(size_t idx, Texture* tex);
 
 		void SetTex(const GLchar* name, size_t v) const;
 

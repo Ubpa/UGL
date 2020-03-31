@@ -32,6 +32,14 @@ namespace Ubpa::gl {
 		glBindBuffer(static_cast<GLenum>(target), buffer);
 	}
 
+	inline void BindFramebuffer(FramebufferType target, GLuint framebuffer) {
+		glBindFramebuffer(static_cast<GLenum>(target), framebuffer);
+	}
+
+	inline void BindRenderbuffer(GLuint renderbuffer) {
+		glBindRenderbuffer(GL_RENDERBUFFER, renderbuffer);
+	}
+
 	inline void BindTexture(TextureType target, GLuint texture) {
 		glBindTexture(static_cast<GLenum>(target), texture);
 	}
@@ -40,8 +48,8 @@ namespace Ubpa::gl {
 		glBufferData(static_cast<GLenum>(target), size, data, static_cast<GLenum>(usage));
 	}
 
-	inline void CullFace(CullMode mode) {
-		glCullFace(static_cast<GLenum>(mode));
+	inline FramebufferStatus CheckFramebufferStatus(FramebufferType target) {
+		return static_cast<FramebufferStatus>(glCheckFramebufferStatus(static_cast<GLenum>(target)));
 	}
 
 	inline void Clear(gl::BufferSelectBit mask) {
@@ -54,6 +62,10 @@ namespace Ubpa::gl {
 
 	inline GLuint CreateShader(ShaderType type) {
 		return glCreateShader(static_cast<GLenum>(type));
+	}
+
+	inline void CullFace(CullMode mode) {
+		glCullFace(static_cast<GLenum>(mode));
 	}
 
 	inline void DepthFunc(CompareFunc func) {
@@ -72,6 +84,14 @@ namespace Ubpa::gl {
 		glEnable(static_cast<GLenum>(cap));
 	}
 
+	inline void FramebufferRenderbuffer(FramebufferType target, FramebufferAttachment attachment, GLuint renderbuffer) {
+		glFramebufferRenderbuffer(static_cast<GLenum>(target), static_cast<GLenum>(attachment), GL_RENDERBUFFER, renderbuffer);
+	}
+
+	inline void FramebufferTexture2D(FramebufferType target, FramebufferAttachment attachment, GLenum textarget, GLuint texture, GLint level) {
+		glFramebufferTexture2D(static_cast<GLenum>(target), static_cast<GLenum>(attachment), textarget, texture, level);
+	}
+
 	inline void FrontFace(FaceOrientation mode) {
 		glFrontFace(static_cast<GLenum>(mode));
 	}
@@ -86,6 +106,14 @@ namespace Ubpa::gl {
 
 	inline void GetShaderiv(GLuint shader, ShaderParam pname, GLint* params) {
 		glGetShaderiv(shader, static_cast<GLenum>(pname), params);
+	}
+
+	inline void ReadPixels(GLint x, GLint y, GLsizei width, GLsizei height, PixelDataFormat format, PixelDataType type, void* pixels) {
+		glReadPixels(x, y, width, height, static_cast<GLenum>(format), static_cast<GLenum>(type), pixels);
+	}
+
+	inline void RenderbufferStorage(FramebufferInternalFormat internalformat, GLsizei width, GLsizei height) {
+		glRenderbufferStorage(GL_RENDERBUFFER, static_cast<GLenum>(internalformat), width, height);
 	}
 
 	inline void StencilFunc(CompareFunc func, GLint ref, GLuint mask) {
@@ -214,9 +242,9 @@ namespace Ubpa::gl {
 	inline void ReadBuffer(GLenum src) {
 		glReadBuffer(src);
 	}
-	inline void ReadPixels(GLint x, GLint y, GLsizei width, GLsizei height, GLenum format, GLenum type, void* pixels) {
+	/*inline void ReadPixels(GLint x, GLint y, GLsizei width, GLsizei height, GLenum format, GLenum type, void* pixels) {
 		glReadPixels(x, y, width, height, format, type, pixels);
-	}
+	}*/
 	inline void GetBooleanv(GLenum pname, GLboolean* data) {
 		glGetBooleanv(pname, data);
 	}
@@ -919,48 +947,48 @@ namespace Ubpa::gl {
 	inline GLboolean IsRenderbuffer(GLuint renderbuffer) {
 		return glIsRenderbuffer(renderbuffer);
 	}
-	inline void BindRenderbuffer(GLenum target, GLuint renderbuffer) {
+	/*inline void BindRenderbuffer(GLenum target, GLuint renderbuffer) {
 		glBindRenderbuffer(target, renderbuffer);
-	}
+	}*/
 	inline void DeleteRenderbuffers(GLsizei n, const GLuint* renderbuffers) {
 		glDeleteRenderbuffers(n, renderbuffers);
 	}
 	inline void GenRenderbuffers(GLsizei n, GLuint* renderbuffers) {
 		glGenRenderbuffers(n, renderbuffers);
 	}
-	inline void RenderbufferStorage(GLenum target, GLenum internalformat, GLsizei width, GLsizei height) {
+	/*inline void RenderbufferStorage(GLenum target, GLenum internalformat, GLsizei width, GLsizei height) {
 		glRenderbufferStorage(target, internalformat, width, height);
-	}
+	}*/
 	inline void GetRenderbufferParameteriv(GLenum target, GLenum pname, GLint* params) {
 		glGetRenderbufferParameteriv(target, pname, params);
 	}
 	inline GLboolean IsFramebuffer(GLuint framebuffer) {
 		return glIsFramebuffer(framebuffer);
 	}
-	inline void BindFramebuffer(GLenum target, GLuint framebuffer) {
+	/*inline void BindFramebuffer(GLenum target, GLuint framebuffer) {
 		glBindFramebuffer(target, framebuffer);
-	}
+	}*/
 	inline void DeleteFramebuffers(GLsizei n, const GLuint* framebuffers) {
 		glDeleteFramebuffers(n, framebuffers);
 	}
 	inline void GenFramebuffers(GLsizei n, GLuint* framebuffers) {
 		glGenFramebuffers(n, framebuffers);
 	}
-	inline GLenum CheckFramebufferStatus(GLenum target) {
+	/*inline GLenum CheckFramebufferStatus(GLenum target) {
 		return glCheckFramebufferStatus(target);
-	}
+	}*/
 	inline void FramebufferTexture1D(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level) {
 		glFramebufferTexture1D(target, attachment, textarget, texture, level);
 	}
-	inline void FramebufferTexture2D(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level) {
+	/*inline void FramebufferTexture2D(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level) {
 		glFramebufferTexture2D(target, attachment, textarget, texture, level);
-	}
+	}*/
 	inline void FramebufferTexture3D(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level, GLint zoffset) {
 		glFramebufferTexture3D(target, attachment, textarget, texture, level, zoffset);
 	}
-	inline void FramebufferRenderbuffer(GLenum target, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer) {
+	/*inline void FramebufferRenderbuffer(GLenum target, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer) {
 		glFramebufferRenderbuffer(target, attachment, renderbuffertarget, renderbuffer);
-	}
+	}*/
 	inline void GetFramebufferAttachmentParameteriv(GLenum target, GLenum attachment, GLenum pname, GLint* params) {
 		glGetFramebufferAttachmentParameteriv(target, attachment, pname, params);
 	}

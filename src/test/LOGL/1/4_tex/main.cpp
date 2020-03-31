@@ -116,7 +116,7 @@ int main()
         gl::Clear(gl::BufferSelectBit::ColorBufferBit);
 
         // bind textures on corresponding texture units
-        texture0.Use(0);
+        program.Active(0, &texture0);
         vao.Draw(&program);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)

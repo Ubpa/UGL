@@ -7,7 +7,30 @@ using namespace std;
 Texture::Texture(TextureType type)
 	: type{ type }
 {
-	glGenTextures(1, id.init_ptr());
+	gl::GenTextures(1, id.init_ptr());
+}
+
+Texture::~Texture() {
+	Clear();
+}
+
+void Texture::Clear() {
+	if (IsValid()) {
+		gl::DeleteTextures(1, id.del_ptr());
+		id.Clear();
+	}
+}
+
+Texture::Texture(Texture&& tex) noexcept
+	: Obj{ tex.id }, type{ move(tex.type) }
+{
+}
+
+Texture& Texture::operator=(Texture&& tex) noexcept {
+	Clear();
+	id = move(tex.id);
+	type = move(tex.type);
+	return *this;
 }
 
 void Texture::Bind() const {
@@ -35,12 +58,6 @@ void Texture::SetWrapFilter(WrapMode s, WrapMode t, MinFilter min, MagFilter mag
 
 void Texture::GenerateMipmap() {
 	gl::GenerateMipmap(type);
-}
-
-void Texture::Use(size_t i) {
-	assert(i < MaxUnit());
-	gl::ActiveTexture(static_cast<GLenum>(GL_TEXTURE0 + i));
-	Bind();
 }
 
 size_t Texture::MaxUnit() {

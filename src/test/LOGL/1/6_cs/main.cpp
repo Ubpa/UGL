@@ -162,7 +162,7 @@ int main()
         gl::Clear(gl::BufferSelectBit::ColorBufferBit | gl::BufferSelectBit::DepthBufferBit); // also clear the depth buffer now!
 
          // bind textures on corresponding texture units
-        texture0.Use(0);
+        program.Active(0, &texture0);
 
         // activate shader
 

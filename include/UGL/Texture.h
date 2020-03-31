@@ -11,6 +11,10 @@ namespace Ubpa::gl {
 		Read<Texture, TextureType> type;
 
 		Texture(TextureType type);
+		~Texture();
+		void Clear();
+		Texture(Texture&& tex) noexcept;
+		Texture& operator=(Texture&& tex) noexcept;
 
 		void Bind() const;
 		void BindReset() const;
@@ -20,8 +24,6 @@ namespace Ubpa::gl {
 		void SetWrapFilter(WrapMode s, WrapMode t, MinFilter min, MagFilter mag);
 
 		void GenerateMipmap();
-
-		void Use(size_t i);
 
 		static size_t MaxUnit();
 	};

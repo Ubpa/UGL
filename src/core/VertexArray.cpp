@@ -33,6 +33,7 @@ VertexArray::VertexArray(VertexArray&& va) noexcept
 	: Obj{ move(va.id) }, eb{ va.eb } {}
 
 VertexArray& VertexArray::operator=(VertexArray&& va) noexcept {
+	Clear();
 	id = move(va.id);
 	eb = va.eb;
 	return *this;
