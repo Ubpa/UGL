@@ -11,17 +11,17 @@ using namespace std;
 Shader::Shader(ShaderType type)
 	: type{ type } { }
 
-bool Shader::InitPath(const std::string& path) {
+bool Shader::InitPath(const string& path) {
 	// open files
 	ifstream file;
 	file.open(path);
 	if (!file.is_open()) {
-		std::cerr << "ERROR::Shader::InitPath(const string&):" << endl
+		cerr << "ERROR::Shader::InitPath(const string&):" << endl
 			<< "    open fail" << endl
 			<< "    - path: " << path << endl;
 		return false;
 	}
-	std::stringstream ss;
+	stringstream ss;
 	// read file's buffer contents into streams
 	ss << file.rdbuf();
 	// close file handlers
@@ -32,7 +32,7 @@ bool Shader::InitPath(const std::string& path) {
 	return rst;
 }
 
-bool Shader::InitSrc(const std::string& src) {
+bool Shader::InitSrc(const string& src) {
 	Clear();
 
 	id = gl::CreateShader(type);
@@ -49,14 +49,14 @@ bool Shader::InitSrc(const std::string& src) {
 	return true;
 }
 
-Shader::Shader(ShaderType type, const std::string& path)
+Shader::Shader(ShaderType type, const string& path)
 	: type{ type }
 {
 	InitPath(path);
 }
 
 Shader::Shader(Shader&& shader) noexcept
-	: Obj{ std::move(shader.id) }, path{ std::move(shader.path) }, type{ shader.type } {}
+	: Obj{ move(shader.id) }, path{ move(shader.path) }, type{ shader.type } {}
 
 Shader& Shader::operator=(Shader&& shader) noexcept {
 	Clear();

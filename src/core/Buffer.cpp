@@ -20,15 +20,15 @@ Buffer::~Buffer() {
 
 Buffer::Buffer(Buffer&& buf) noexcept
 	: target{ buf.target },
-	id{ std::move(buf.id) },
+	id{ move(buf.id) },
 	usage{ buf.usage } {}
 
 Buffer& Buffer::operator=(Buffer&& buf) noexcept {
 	Clear();
 
-	target = move(buf.target);
+	target = buf.target;
 	id = move(buf.id);
-	usage = move(buf.usage);
+	usage = buf.usage;
 	return *this;
 }
 
@@ -46,4 +46,9 @@ void Buffer::Bind() const {
 
 void Buffer::BindReset(BufferType target) {
 	gl::BindBuffer(target, 0);
+}
+
+void Buffer::SubData(GLintptr offset, GLsizeiptr size, const void* data) {
+	assert(data != nullptr);
+	gl::BufferSubData(target, offset, size, data);
 }

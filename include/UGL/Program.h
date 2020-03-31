@@ -10,7 +10,7 @@ namespace Ubpa::gl {
 		Program(const Shader* vs, const Shader* fs, const Shader* gs = nullptr);
 		~Program();
 
-		Program(Program&& p) noexcept : Obj{ p.id } {}
+		Program(Program&& p) noexcept;
 		Program& operator=(Program&& p) noexcept;
 
 		void Clear();

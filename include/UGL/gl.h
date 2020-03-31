@@ -48,6 +48,10 @@ namespace Ubpa::gl {
 		glBufferData(static_cast<GLenum>(target), size, data, static_cast<GLenum>(usage));
 	}
 
+	inline void BufferSubData(BufferType target, GLintptr offset, GLsizeiptr size, const void* data) {
+		glBufferSubData(static_cast<GLenum>(target), offset, size, data);
+	}
+
 	inline FramebufferStatus CheckFramebufferStatus(FramebufferType target) {
 		return static_cast<FramebufferStatus>(glCheckFramebufferStatus(static_cast<GLenum>(target)));
 	}
@@ -125,7 +129,7 @@ namespace Ubpa::gl {
 	}
 
 	// border must be 0
-	inline void TexImage2D(TextureType target, GLint level, PixelDataInternalFormat internalformat, GLsizei width, GLsizei height, PixelDataFormat format, PixelDataType type, const void* pixels) {
+	inline void TexImage2D(TextureTarget target, GLint level, PixelDataInternalFormat internalformat, GLsizei width, GLsizei height, PixelDataFormat format, PixelDataType type, const void* pixels) {
 		glTexImage2D(static_cast<GLenum>(target), level, static_cast<GLint>(internalformat), width, height, 0, static_cast<GLenum>(format), static_cast<GLenum>(type), pixels);
 	}
 
@@ -446,9 +450,9 @@ namespace Ubpa::gl {
 	//inline void BufferData(GLenum target, GLsizeiptr size, const void* data, GLenum usage) {
 	//	glBufferData(target, size, data, usage);
 	//}
-	inline void BufferSubData(GLenum target, GLintptr offset, GLsizeiptr size, const void* data) {
+	/*inline void BufferSubData(GLenum target, GLintptr offset, GLsizeiptr size, const void* data) {
 		glBufferSubData(target, offset, size, data);
-	}
+	}*/
 	inline void GetBufferSubData(GLenum target, GLintptr offset, GLsizeiptr size, void* data) {
 		glGetBufferSubData(target, offset, size, data);
 	}

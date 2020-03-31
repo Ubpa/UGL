@@ -8,6 +8,8 @@
 namespace Ubpa::gl {
 	class Buffer : public Obj {
 	public:
+		Read<Buffer, BufferUsage> usage;
+
 		Buffer(BufferType target, GLsizeiptr size, const void* data, BufferUsage usage = BufferUsage::StaticDraw);
 
 		Buffer(Buffer&& buf) noexcept;
@@ -21,9 +23,10 @@ namespace Ubpa::gl {
 		void Bind() const;
 		static void BindReset(BufferType target);
 
+		void SubData(GLintptr offset, GLsizeiptr size, const void* data);
+
 	protected:
 		ID id{ static_cast<GLuint>(0) }; // 0 is invalid
 		BufferType target;
-		BufferUsage usage; // 0 is invalid
 	};
 }

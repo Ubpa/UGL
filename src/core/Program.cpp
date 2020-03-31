@@ -25,6 +25,7 @@ Program::Program(const Shader* vs, const Shader* fs, const Shader* gs)
 Program::~Program() {
 	Clear();
 }
+Program::Program(Program&& p) noexcept : Obj{ move(p.id) } {}
 
 Program& Program::operator=(Program&& p) noexcept {
 	Clear();
@@ -47,7 +48,7 @@ void Program::Param(ProgramParam pname, GLint* params) const {
 GLint Program::GetUniformLocation(const GLchar* name) const {
 	assert(IsValid());
 	GLint rst = gl::GetUniformLocation(id, name);
-	assert(rst != -1);
+	//assert(rst != -1);
 	return rst;
 }
 
@@ -76,8 +77,8 @@ void Program::Use() const {
 
 void Program::Active(size_t idx, Texture* tex) {
 	Use();
-	gl::ActiveTexture(static_cast<GLenum>(GL_TEXTURE0 + idx));
 	tex->Bind();
+	gl::ActiveTexture(static_cast<GLenum>(GL_TEXTURE0 + idx));
 }
 
 void Program::SetTex(const GLchar* name, size_t v) const {

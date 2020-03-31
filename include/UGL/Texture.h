@@ -19,12 +19,11 @@ namespace Ubpa::gl {
 		void Bind() const;
 		void BindReset() const;
 
-		void SetImage(GLint level, PixelDataInternalFormat internalformat, GLsizei width, GLsizei height, PixelDataFormat format, PixelDataType type, const void* pixels);
-
-		void SetWrapFilter(WrapMode s, WrapMode t, MinFilter min, MagFilter mag);
-
 		void GenerateMipmap();
 
 		static size_t MaxUnit();
+
+	protected:
+		void SetImage(TextureTarget target, GLint level, PixelDataInternalFormat internalformat, GLsizei width, GLsizei height, PixelDataFormat format, PixelDataType type, const void* pixels);
 	};
 }

@@ -9,6 +9,10 @@ namespace Ubpa::gl {
 	public:
 		Texture2D();
 
+		void SetImage(GLint level, PixelDataInternalFormat internalformat, GLsizei width, GLsizei height, PixelDataFormat format, PixelDataType type, const void* pixels);
+
+		void SetWrapFilter(WrapMode s, WrapMode t, MinFilter min, MagFilter mag);
+
 	private:
 		friend class FrameBuffer;
 		const ID& GetID() const noexcept { return id; }

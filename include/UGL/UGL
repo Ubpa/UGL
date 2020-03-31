@@ -10,5 +10,6 @@
 #include "VertexBuffer.h"
 #include "ElementBuffer.h"
 #include "Texture2D.h"
+#include "TextureCubeMap.h"
 #include "FrameBuffer.h"
 #include "RenderBuffer.h"

@@ -18,12 +18,12 @@ FrameBuffer::~FrameBuffer() {
 }
 
 FrameBuffer::FrameBuffer(FrameBuffer&& fb) noexcept
-	: Obj{ move(fb.id) }, type{ move(fb.type) }, attach2tex{ move(fb.attach2tex) } {}
+	: Obj{ move(fb.id) }, type{ fb.type }, attach2tex{ move(fb.attach2tex) } {}
 
 FrameBuffer& FrameBuffer::operator=(FrameBuffer&& fb) noexcept {
 	Clear();
 	id = move(fb.id);
-	type = move(fb.type);
+	type = fb.type;
 	attach2tex = move(fb.attach2tex);
 	return *this;
 }

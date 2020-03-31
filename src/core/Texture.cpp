@@ -22,14 +22,14 @@ void Texture::Clear() {
 }
 
 Texture::Texture(Texture&& tex) noexcept
-	: Obj{ tex.id }, type{ move(tex.type) }
+	: Obj{ move(tex.id) }, type{ tex.type }
 {
 }
 
 Texture& Texture::operator=(Texture&& tex) noexcept {
 	Clear();
 	id = move(tex.id);
-	type = move(tex.type);
+	type = tex.type;
 	return *this;
 }
 
@@ -41,18 +41,9 @@ void Texture::BindReset() const {
 	gl::BindTexture(type, 0);
 }
 
-void Texture::SetImage(GLint level, PixelDataInternalFormat internalformat, GLsizei width, GLsizei height, PixelDataFormat format, PixelDataType type, const void* pixels) {
+void Texture::SetImage(TextureTarget target, GLint level, PixelDataInternalFormat internalformat, GLsizei width, GLsizei height, PixelDataFormat format, PixelDataType type, const void* pixels) {
 	Bind();
-	gl::TexImage2D(this->type, level, internalformat, width, height, format, type, pixels);
-	BindReset();
-}
-
-void Texture::SetWrapFilter(WrapMode s, WrapMode t, MinFilter min, MagFilter mag) {
-	Bind();
-	gl::TexParameteri(type, TextureParam::TextureWrapS, static_cast<GLint>(s));
-	gl::TexParameteri(type, TextureParam::TextureWrapT, static_cast<GLint>(t));
-	gl::TexParameteri(type, TextureParam::TextureMinFilter, static_cast<GLint>(min));
-	gl::TexParameteri(type, TextureParam::TextureMagFilter, static_cast<GLint>(mag));
+	gl::TexImage2D(target, level, internalformat, width, height, format, type, pixels);
 	BindReset();
 }
 
