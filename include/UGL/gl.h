@@ -9,6 +9,25 @@
 namespace Ubpa::gl {
 	// ================================ optimize ================================
 
+	inline void BlendColor(rgba<GLfloat> c) {
+		glBlendColor(c[0], c[1], c[2], c[3]);
+	}
+
+	inline void BlendFunc(BlendFactor sfactor, BlendFactor dfactor) {
+		glBlendFunc(static_cast<GLenum>(sfactor), static_cast<GLenum>(dfactor));
+	}
+
+	inline void BlendEquation(BlendEqMode mode) {
+		glBlendEquation(static_cast<GLenum>(mode));
+	}
+
+	inline void BlendFuncSeparate(BlendFactor sfactorRGB, BlendFactor dfactorRGB, BlendFactor sfactorAlpha, BlendFactor dfactorAlpha) {
+		glBlendFuncSeparate(static_cast<GLenum>(sfactorRGB),
+			static_cast<GLenum>(dfactorRGB),
+			static_cast<GLenum>(sfactorAlpha),
+			static_cast<GLenum>(dfactorAlpha));
+	}
+
 	inline void BindBuffer(BufferType target, GLuint buffer) {
 		glBindBuffer(static_cast<GLenum>(target), buffer);
 	}
@@ -19,6 +38,10 @@ namespace Ubpa::gl {
 
 	inline void BufferData(BufferType target, GLsizeiptr size, const void* data, BufferUsage usage) {
 		glBufferData(static_cast<GLenum>(target), size, data, static_cast<GLenum>(usage));
+	}
+
+	inline void CullFace(CullMode mode) {
+		glCullFace(static_cast<GLenum>(mode));
 	}
 
 	inline void Clear(gl::BufferSelectBit mask) {
@@ -33,6 +56,10 @@ namespace Ubpa::gl {
 		return glCreateShader(static_cast<GLenum>(type));
 	}
 
+	inline void DepthFunc(CompareFunc func) {
+		glDepthFunc(static_cast<GLenum>(func));
+	}
+
 	inline void Disable(Capability cap) {
 		glDisable(static_cast<GLenum>(cap));
 	}
@@ -45,6 +72,10 @@ namespace Ubpa::gl {
 		glEnable(static_cast<GLenum>(cap));
 	}
 
+	inline void FrontFace(FaceOrientation mode) {
+		glFrontFace(static_cast<GLenum>(mode));
+	}
+
 	inline void GenerateMipmap(TextureType target) {
 		glGenerateMipmap(static_cast<GLenum>(target));
 	}
@@ -55,6 +86,14 @@ namespace Ubpa::gl {
 
 	inline void GetShaderiv(GLuint shader, ShaderParam pname, GLint* params) {
 		glGetShaderiv(shader, static_cast<GLenum>(pname), params);
+	}
+
+	inline void StencilFunc(CompareFunc func, GLint ref, GLuint mask) {
+		glStencilFunc(static_cast<GLenum>(func), ref, mask);
+	}
+
+	inline void StencilOp(StencilOperation fail, StencilOperation zfail, StencilOperation zpass) {
+		glStencilOp(static_cast<GLenum>(fail), static_cast<GLenum>(zfail), static_cast<GLenum>(zpass));
 	}
 
 	// border must be 0
@@ -76,12 +115,12 @@ namespace Ubpa::gl {
 
 	// ================================ original ================================
 
-	inline void CullFace(GLenum mode) {
+	/*inline void CullFace(GLenum mode) {
 		glCullFace(mode);
-	}
-	inline void FrontFace(GLenum mode) {
+	}*/
+	/*inline void FrontFace(GLenum mode) {
 		glFrontFace(mode);
-	}
+	}*/
 	inline void Hint(GLenum target, GLenum mode) {
 		glHint(target, mode);
 	}
@@ -151,21 +190,21 @@ namespace Ubpa::gl {
 	inline void Flush(void) {
 		glFlush();
 	}
-	inline void BlendFunc(GLenum sfactor, GLenum dfactor) {
+	/*inline void BlendFunc(GLenum sfactor, GLenum dfactor) {
 		glBlendFunc(sfactor, dfactor);
-	}
+	}*/
 	inline void LogicOp(GLenum opcode) {
 		glLogicOp(opcode);
 	}
-	inline void StencilFunc(GLenum func, GLint ref, GLuint mask) {
+	/*inline void StencilFunc(GLenum func, GLint ref, GLuint mask) {
 		glStencilFunc(func, ref, mask);
-	}
-	inline void StencilOp(GLenum fail, GLenum zfail, GLenum zpass) {
+	}*/
+	/*inline void StencilOp(GLenum fail, GLenum zfail, GLenum zpass) {
 		glStencilOp(fail, zfail, zpass);
-	}
-	inline void DepthFunc(GLenum func) {
+	}*/
+	/*inline void DepthFunc(GLenum func) {
 		glDepthFunc(func);
-	}
+	}*/
 	inline void PixelStoref(GLenum pname, GLfloat param) {
 		glPixelStoref(pname, param);
 	}
@@ -310,9 +349,9 @@ namespace Ubpa::gl {
 #endif
 
 #ifdef GL_VERSION_1_4
-	inline void BlendFuncSeparate(GLenum sfactorRGB, GLenum dfactorRGB, GLenum sfactorAlpha, GLenum dfactorAlpha) {
+	/*inline void BlendFuncSeparate(GLenum sfactorRGB, GLenum dfactorRGB, GLenum sfactorAlpha, GLenum dfactorAlpha) {
 		glBlendFuncSeparate(sfactorRGB, dfactorRGB, sfactorAlpha, dfactorAlpha);
-	}
+	}*/
 	inline void MultiDrawArrays(GLenum mode, const GLint* first, const GLsizei* count, GLsizei drawcount) {
 		glMultiDrawArrays(mode, first, count, drawcount);
 	}
@@ -331,12 +370,12 @@ namespace Ubpa::gl {
 	inline void PointParameteriv(GLenum pname, const GLint* params) {
 		glPointParameteriv(pname, params);
 	}
-	inline void BlendColor(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha) {
+	/*inline void BlendColor(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha) {
 		glBlendColor(red, green, blue, alpha);
-	}
-	inline void BlendEquation(GLenum mode) {
+	}*/
+	/*inline void BlendEquation(GLenum mode) {
 		glBlendEquation(mode);
-	}
+	}*/
 #endif
 
 #ifdef GL_VERSION_1_5
