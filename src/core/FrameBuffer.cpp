@@ -71,3 +71,7 @@ bool FrameBuffer::IsComplete() const {
 	BindReset();
 	return status == FramebufferStatus::FramebufferComplete;
 }
+
+void FrameBuffer::DrawBuffers(std::vector<ColorBuffer> attachments) {
+	gl::DrawBuffers(attachments.size(), reinterpret_cast<GLenum*>(attachments.data()));
+}

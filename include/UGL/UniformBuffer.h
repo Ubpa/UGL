@@ -14,6 +14,9 @@ namespace Ubpa::gl {
 		// std140
 		class Packer {
 		public:
+			Packer(const std::string& name) : name{ name } {}
+
+			Read<Packer, const std::string> name;
 			Read<Packer, size_t> size;
 			Read<Packer, std::map<std::string, std::tuple<size_t, size_t>>> n2os; // name to offset and size
 			
@@ -26,13 +29,15 @@ namespace Ubpa::gl {
 			void PushArray(const std::string& name, Type type, size_t n);
 		};
 	public:
-		Read<UniformBuffer, size_t> bindingPoint;
+		Read<UniformBuffer, const size_t> bindingPoint;
 
 		UniformBuffer(Packer&& packer, BufferUsage usage = BufferUsage::StaticDraw);
 
 		void Set(const std::string& name, const void* data);
 
 		static void BindReset();
+
+		const std::string& GetName() const { return packer.name; }
 
 	private:
 		Packer packer;

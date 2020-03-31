@@ -4,6 +4,7 @@
 
 namespace Ubpa::gl {
 	class Texture;
+	class UniformBuffer;
 
 	class Program : public Obj {
 	public:
@@ -41,6 +42,7 @@ namespace Ubpa::gl {
 		void SetMatf4(const GLchar* name, const matf4& mat) const;
 		void SetMatf4(const GLchar* name, const transformf& tsfm) const;
 
+		void BindUB(const UniformBuffer* ub);
 	private:
 		bool CheckLinkError() const;
 	};

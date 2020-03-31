@@ -9,6 +9,7 @@
 #include "VertexArray.h"
 #include "VertexBuffer.h"
 #include "ElementBuffer.h"
+#include "UniformBuffer.h"
 #include "Texture2D.h"
 #include "TextureCubeMap.h"
 #include "FrameBuffer.h"

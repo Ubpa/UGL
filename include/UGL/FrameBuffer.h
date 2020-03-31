@@ -5,6 +5,7 @@
 
 #include <UDP/Basic/Read.h>
 
+#include <vector>
 #include <map>
 
 namespace Ubpa::gl {
@@ -30,6 +31,7 @@ namespace Ubpa::gl {
 		Texture2D* GetTex2D(FramebufferAttachment attachment) const;
 
 		bool IsComplete() const;
+		void DrawBuffers(std::vector<ColorBuffer> attachments);
 
 	private:
 		std::map<FramebufferAttachment, Texture2D*> attach2tex;

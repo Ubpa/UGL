@@ -19,8 +19,8 @@ Buffer::~Buffer() {
 }
 
 Buffer::Buffer(Buffer&& buf) noexcept
-	: target{ buf.target },
-	id{ move(buf.id) },
+	: Obj{ move(buf.id) },
+	target{ buf.target },
 	usage{ buf.usage } {}
 
 Buffer& Buffer::operator=(Buffer&& buf) noexcept {

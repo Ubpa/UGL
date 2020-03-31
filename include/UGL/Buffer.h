@@ -16,8 +16,6 @@ namespace Ubpa::gl {
 		Buffer& operator=(Buffer&& buf) noexcept;
 		~Buffer();
 
-		bool IsValid() const noexcept { return id.IsValid(); }
-
 		void Clear();
 
 		void Bind() const;
@@ -26,7 +24,6 @@ namespace Ubpa::gl {
 		void SubData(GLintptr offset, GLsizeiptr size, const void* data);
 
 	protected:
-		ID id{ static_cast<GLuint>(0) }; // 0 is invalid
 		BufferType target;
 	};
 }
