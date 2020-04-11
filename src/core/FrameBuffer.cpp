@@ -73,5 +73,7 @@ bool FrameBuffer::IsComplete() const {
 }
 
 void FrameBuffer::DrawBuffers(std::vector<ColorBuffer> attachments) {
-	gl::DrawBuffers(attachments.size(), reinterpret_cast<GLenum*>(attachments.data()));
+	Bind();
+	gl::DrawBuffers(static_cast<GLuint>(attachments.size()), reinterpret_cast<GLenum*>(attachments.data()));
+	BindReset();
 }

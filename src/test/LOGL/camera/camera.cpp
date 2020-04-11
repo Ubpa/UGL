@@ -25,17 +25,32 @@ transformf Camera::GetViewMatrix() const
     return transformf::look_at(Position, Position + Front, WorldUp);
 }
 
-void Camera::ProcessKeyboard(Camera_Movement direction, float deltaTime)
+void Camera::ProcessKeyboard(Movement direction, float deltaTime)
 {
     float velocity = MovementSpeed * deltaTime;
-    if (direction == FORWARD)
+    switch (direction)
+    {
+    case Movement::FORWARD:
         Position += Front * velocity;
-    if (direction == BACKWARD)
+        break;
+    case Movement::BACKWARD:
         Position -= Front * velocity;
-    if (direction == LEFT)
+        break;
+    case Movement::LEFT:
         Position -= Right * velocity;
-    if (direction == RIGHT)
+        break;
+    case Movement::RIGHT:
         Position += Right * velocity;
+        break;
+    case Movement::UP:
+        Position += Up * velocity;
+        break;
+    case Movement::DOWN:
+        Position -= Up * velocity;
+        break;
+    default:
+        break;
+    }
 }
 
 void Camera::ProcessMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch)

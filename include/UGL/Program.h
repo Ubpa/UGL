@@ -30,7 +30,7 @@ namespace Ubpa::gl {
 		void SetFloat(const GLchar* name, GLfloat v) const;
 		void SetVecf2(const GLchar* name, const val<GLfloat, 2>& v) const;
 		void SetVecf3(const GLchar* name, const val<GLfloat, 3>& v) const;
-		void SetVec4f(const GLchar* name, const val<GLfloat, 4>& v) const;
+		void SetVecf4(const GLchar* name, const val<GLfloat, 4>& v) const;
 
 		void SetInts(const GLchar* name, GLuint n, const GLint* data) const;
 		void SetUInts(const GLchar* name, GLuint n, const GLuint* data) const;

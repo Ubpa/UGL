@@ -78,8 +78,9 @@ void Program::Use() const {
 }
 
 void Program::Active(size_t idx, Texture* tex) {
-	tex->Bind();
+	Use();
 	gl::ActiveTexture(static_cast<GLenum>(GL_TEXTURE0 + idx));
+	tex->Bind(); // bind after active
 }
 
 void Program::SetTex(const GLchar* name, size_t v) const {
@@ -115,7 +116,7 @@ void Program::SetVecf3(const GLchar* name, const val<GLfloat, 3>& v) const {
 	gl::Uniform3f(GetUniformLocation(name), v[0], v[1], v[2]);
 }
 ;
-void Program::SetVec4f(const GLchar* name, const val<GLfloat, 4>& v) const {
+void Program::SetVecf4(const GLchar* name, const val<GLfloat, 4>& v) const {
 	Use();
 	gl::Uniform4f(GetUniformLocation(name), v[0], v[1], v[2], v[3]);
 }

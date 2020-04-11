@@ -37,7 +37,7 @@ namespace Ubpa::gl {
 
 		static void BindReset();
 
-		const std::string& GetName() const { return packer.name; }
+		const std::string& GetName() const { return packer.name.get(); }
 
 	private:
 		Packer packer;
