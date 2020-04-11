@@ -6,5 +6,4 @@ Ubpa_GlobGroupSrcs(RST sources PATHS
 
 Ubpa_AddTarget(MODE "LIB"
 	SOURCES ${sources}
-	TEST ON
 )

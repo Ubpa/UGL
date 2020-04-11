@@ -3,15 +3,15 @@ Ubpa_GlobGroupSrcs(RST sources PATHS
 	"${PROJECT_SOURCE_DIR}/include/UGL"
 )
 
-if(${UBPA_UGL_GLAD})
-	add_definitions(-DUBPA_UGL_GLAD)
-endif()
+Ubpa_GetTargetName(glad "${PROJECT_SOURCE_DIR}/src/_deps/glad")
 
 Ubpa_AddTarget_GDR(
 	MODE "LIB"
 	SOURCES ${sources}
 	INTERFACE_INC ON
+	INC_DIRS "_deps"
 	PUBLIC_GLIBS
 		"Ubpa::UGM_core"
 		"Ubpa::UDP_core"
+		"${glad}"
 )
