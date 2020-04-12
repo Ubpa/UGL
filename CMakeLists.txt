@@ -86,6 +86,12 @@ if("${Ubpa_BuildTest}" STREQUAL "ON")
 	include_directories(${PROJECT_SOURCE_DIR}/include/_deps/)
 endif()
 
+find_package(Python REQUIRED)
+execute_process(
+	COMMAND ${Python_EXECUTABLE} ${PROJECT_SOURCE_DIR}/config/enums/tools/src2enum.py
+	WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/config/enums/tools/
+)
+
 Ubpa_AddDep(UGM 0.4.1)
 Ubpa_AddDep(UDP 0.3.1)
 
