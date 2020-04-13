@@ -57,16 +57,6 @@ Ubpa_InitInstallPrefix()
 Ubpa_InitTestSwitch()
 #set(Ubpa_BuildTest ON)
 
-message(STATUS "----------")
-if(EXISTS "${PROJECT_SOURCE_DIR}/include/_deps/glad/glad.h"
-	AND EXISTS "${PROJECT_SOURCE_DIR}/include/_deps/KHR/khrplatform.h"
-	AND EXISTS "${PROJECT_SOURCE_DIR}/src/_deps/glad/glad.c")
-	message(STATUS "found glad")
-else()
-	message(FATAL_ERROR "not found glad\n"
-		"read setup.md for more detail")
-endif()
-
 if("${Ubpa_BuildTest}" STREQUAL "ON")
 	message(STATUS "----------")
 	find_package(glfw3 REQUIRED)
@@ -74,16 +64,6 @@ if("${Ubpa_BuildTest}" STREQUAL "ON")
 		message(STATUS "glfw3_FOUND: ${glfw3_FOUND}")
 		message(STATUS "glfw3_DIR: ${glfw3_DIR}")
 	endif()
-
-	message(STATUS "----------")
-	if(EXISTS "${PROJECT_SOURCE_DIR}/include/_deps/stb_image.h")
-		message(STATUS "found stb_image.h")
-	else()
-		message(FATAL_ERROR "not found stb_image.h in include/_deps/\n"
-			"read README.md for more detail")
-	endif()
-
-	include_directories(${PROJECT_SOURCE_DIR}/include/_deps/)
 endif()
 
 find_package(Python REQUIRED)
@@ -95,6 +75,7 @@ execute_process(
 Ubpa_AddDep(UGM 0.4.1)
 Ubpa_AddDep(UDP 0.3.1)
 
+Ubpa_AddSubDirsRec(include)
 Ubpa_AddSubDirsRec(src)
 
 Ubpa_Export(DIRECTORIES "include")
