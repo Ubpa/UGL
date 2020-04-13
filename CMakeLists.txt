@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
 
 # 设定项目
-project(UGL VERSION 0.1.2)
+project(UGL VERSION 0.1.3)
 message(STATUS "[Project] ${PROJECT_NAME}")
 
 # 在 Debug 模式下自动对 dll 和 lib 文件名后边加 d，但 exe 仍然需要手动设置
@@ -76,6 +76,7 @@ Ubpa_AddDep(UGM 0.4.1)
 Ubpa_AddDep(UDP 0.3.1)
 
 Ubpa_AddSubDirsRec(include)
+Ubpa_AddSubDirsRec(data)
 Ubpa_AddSubDirsRec(src)
 
 Ubpa_Export(DIRECTORIES "include")
