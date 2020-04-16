@@ -4,7 +4,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
-#include <UGL/UGL>
+#include <UGL/UGL.h>
 #include <UGM/UGM>
 
 #include "../../camera/camera.h"
@@ -134,21 +134,8 @@ int main()
         20, 21, 22, 23, 22, 21,
     };
 
-    gl::VertexBuffer vbo(sizeof(vertices), vertices, gl::BufferUsage::StaticDraw);
-    gl::ElementBuffer ebo(gl::BasicPrimitiveType::Triangles, 12, indices);
-    auto posAttrPtr = vbo.AttrPtr(3, gl::DataType::Float, GL_FALSE, 11 * sizeof(GLfloat), (const void*)(0));
-    auto normalAttrPtr = vbo.AttrPtr(3, gl::DataType::Float, GL_FALSE, 11 * sizeof(GLfloat), (const void*)(5 * sizeof(float)));
-    // cube VAO
-    gl::VertexArray::Format cube_format;
-    cube_format.attrptrs.push_back(posAttrPtr);
-    cube_format.attrptrs.push_back(normalAttrPtr);
-    cube_format.eb = &ebo;
-    gl::VertexArray cube_vao({ 0,1 }, cube_format);
-    // skybox VAO
-    gl::VertexArray::Format skybox_format;
-    skybox_format.attrptrs.push_back(posAttrPtr);
-    skybox_format.eb = &ebo;
-    gl::VertexArray skybox_vao({ 0 }, skybox_format);
+    gl::Mesh cube(gl::BasicPrimitiveType::Triangles, 12, 24, indices,
+        vertices, { 3,2,3,3 });
 
     // load textures
     // -------------
@@ -190,7 +177,7 @@ int main()
         cubemap_program.SetVecf3("cameraPos", camera.Position);
         // cubes
         cubemap_program.Active(0, &cubemap);
-        cube_vao.Draw(&cubemap_program);
+        cube.Draw(cubemap_program);
 
         // draw skybox as last
         gl::DepthFunc(gl::CompareFunc::Lequal); // change depth function so depth test passes when values are equal to depth buffer's content
@@ -199,7 +186,7 @@ int main()
         skybox_program.SetMatf4("projection", projection);
         // skybox cube
         skybox_program.Active(0, &cubemap);
-        skybox_vao.Draw(&skybox_program);
+        cube.Draw(skybox_program);
         gl::DepthFunc(gl::CompareFunc::Less); // set depth function back to default
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)

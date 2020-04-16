@@ -9,7 +9,7 @@ namespace Ubpa::gl {
 	public:
 		Texture2D();
 
-		void SetImage(GLint level, PixelDataInternalFormat internalformat, GLsizei width, GLsizei height, PixelDataFormat format, PixelDataType type, const void* pixels);
+		void SetImage(GLint level, PixelDataInternalFormat internalformat, size_t width, size_t height, PixelDataFormat format, PixelDataType type, const void* pixels);
 
 		void SetWrapFilter(WrapMode s, WrapMode t, MinFilter min, MagFilter mag);
 

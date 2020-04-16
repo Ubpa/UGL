@@ -21,24 +21,17 @@ namespace Ubpa::gl {
 		VertexArray();
 		~VertexArray();
 
-		VertexArray(const std::vector<GLuint>& indices, const Format& format) noexcept;
+		VertexArray(const std::vector<size_t>& indices, const Format& format) noexcept;
 		VertexArray(VertexArray&& va) noexcept;
 		VertexArray& operator=(VertexArray&& va) noexcept;
 
-		void Attach(GLuint idx, const VertexBuffer::AttribPointer& ptr) const;
-		void Attach(const ElementBuffer* eb);
-		void Attach(const std::vector<GLuint>& indices, const Format& format);
-		// attach Format or ElementBuffer first
-		void Draw(const Program* program) const;
-
-		bool IsValid() const noexcept;
+		void Attach(size_t idx, const VertexBuffer::AttribPointer& ptr) const;
+		void Attach(const ElementBuffer& eb);
+		void Attach(const std::vector<size_t>& indices, const Format& format);
 
 		void Clear();
 
 		void Bind() const;
 		static void BindReset();
-
-	private:
-		const ElementBuffer* eb{ nullptr };
 	};
 }

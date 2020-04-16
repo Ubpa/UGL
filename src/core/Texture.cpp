@@ -41,7 +41,7 @@ void Texture::BindReset() const {
 	gl::BindTexture(type, 0);
 }
 
-void Texture::SetImage(TextureTarget target, GLint level, PixelDataInternalFormat internalformat, GLsizei width, GLsizei height, PixelDataFormat format, PixelDataType type, const void* pixels) {
+void Texture::SetImage(TextureTarget target, GLint level, PixelDataInternalFormat internalformat, size_t width, size_t height, PixelDataFormat format, PixelDataType type, const void* pixels) {
 	Bind();
 	gl::TexImage2D(target, level, internalformat, width, height, format, type, pixels);
 	BindReset();

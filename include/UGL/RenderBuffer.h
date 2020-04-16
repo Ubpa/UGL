@@ -15,8 +15,8 @@ namespace Ubpa::gl {
 		static constexpr RenderbufferType type = RenderbufferType::Renderbuffer;
 
 		Read<RenderBuffer, FramebufferInternalFormat> internalformat;
-		Read<RenderBuffer, GLsizei> width{ 0 };
-		Read<RenderBuffer, GLsizei> height{ 0 };
+		Read<RenderBuffer, size_t> width{ static_cast<size_t>(0) };
+		Read<RenderBuffer, size_t> height{ static_cast<size_t>(0) };
 
 		RenderBuffer();
 		~RenderBuffer();
@@ -28,7 +28,7 @@ namespace Ubpa::gl {
 		void Bind() const;
 		static void BindReset();
 
-		void SetStorage(FramebufferInternalFormat internalformat, GLsizei width, GLsizei height);
+		void SetStorage(FramebufferInternalFormat internalformat, size_t width, size_t height);
 
 	private:
 		friend class FrameBuffer;

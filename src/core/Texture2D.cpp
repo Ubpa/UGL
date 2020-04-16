@@ -19,6 +19,6 @@ void Texture2D::SetWrapFilter(WrapMode s, WrapMode t, MinFilter min, MagFilter m
 	BindReset();
 }
 
-void Texture2D::SetImage(GLint level, PixelDataInternalFormat internalformat, GLsizei width, GLsizei height, PixelDataFormat format, PixelDataType type, const void* pixels) {
+void Texture2D::SetImage(GLint level, PixelDataInternalFormat internalformat, size_t width, size_t height, PixelDataFormat format, PixelDataType type, const void* pixels) {
 	Texture::SetImage(TextureTarget::Texture2D, level, internalformat, width, height, format, type, pixels);
 }

@@ -6,7 +6,7 @@ using namespace Ubpa;
 using namespace Ubpa::gl;
 using namespace std;
 
-VertexBuffer::VertexBuffer(GLsizeiptr size, const void* data, BufferUsage usage)
+VertexBuffer::VertexBuffer(size_t size, const void* data, BufferUsage usage)
 	: Buffer(BufferType::ArrayBuffer, size, data, usage) {}
 
 void VertexBuffer::BindReset() {

@@ -9,8 +9,8 @@
 namespace Ubpa::gl {
 	// ================================ optimize ================================
 
-	inline void BlendColor(rgba<GLfloat> c) {
-		glBlendColor(c[0], c[1], c[2], c[3]);
+	inline void BlendColor(rgbaf c) {
+		glBlendColor(static_cast<GLfloat>(c[0]), static_cast<GLfloat>(c[1]), static_cast<GLfloat>(c[2]), static_cast<GLfloat>(c[3]));
 	}
 
 	inline void BlendFunc(BlendFactor sfactor, BlendFactor dfactor) {
@@ -44,12 +44,12 @@ namespace Ubpa::gl {
 		glBindTexture(static_cast<GLenum>(target), texture);
 	}
 
-	inline void BufferData(BufferType target, GLsizeiptr size, const void* data, BufferUsage usage) {
-		glBufferData(static_cast<GLenum>(target), size, data, static_cast<GLenum>(usage));
+	inline void BufferData(BufferType target, size_t size, const void* data, BufferUsage usage) {
+		glBufferData(static_cast<GLenum>(target), static_cast<GLsizeiptr>(size), data, static_cast<GLenum>(usage));
 	}
 
-	inline void BufferSubData(BufferType target, GLintptr offset, GLsizeiptr size, const void* data) {
-		glBufferSubData(static_cast<GLenum>(target), offset, size, data);
+	inline void BufferSubData(BufferType target, size_t offset, size_t size, const void* data) {
+		glBufferSubData(static_cast<GLenum>(target), static_cast<GLintptr>(offset), static_cast<GLsizeiptr>(size), data);
 	}
 
 	inline FramebufferStatus CheckFramebufferStatus(FramebufferType target) {
@@ -60,8 +60,8 @@ namespace Ubpa::gl {
 		glClear(static_cast<GLbitfield>(mask));
 	}
 
-	inline void ClearColor(rgba<GLfloat> c) {
-		glClearColor(c[0], c[1], c[2], c[3]);
+	inline void ClearColor(rgbaf c) {
+		glClearColor(static_cast<GLfloat>(c[0]), static_cast<GLfloat>(c[1]), static_cast<GLfloat>(c[2]), static_cast<GLfloat>(c[3]));
 	}
 
 	inline GLuint CreateShader(ShaderType type) {
@@ -80,8 +80,12 @@ namespace Ubpa::gl {
 		glDisable(static_cast<GLenum>(cap));
 	}
 
-	inline void DrawElements(BasicPrimitiveType mode, GLsizei count, IndexType type = IndexType::UnsignedInt, const void* indices = nullptr) {
-		glDrawElements(static_cast<GLenum>(mode), count, static_cast<GLenum>(type), indices);
+	inline void DrawArrays(BasicPrimitiveType mode, size_t first, size_t count) {
+		glDrawArrays(static_cast<GLenum>(mode), static_cast<GLint>(first), static_cast<GLsizei>(count));
+	}
+
+	inline void DrawElements(BasicPrimitiveType mode, size_t count, IndexType type = IndexType::UnsignedInt, const void* indices = nullptr) {
+		glDrawElements(static_cast<GLenum>(mode), static_cast<GLint>(count), static_cast<GLenum>(type), indices);
 	}
 
 	inline void Enable(Capability cap) {
@@ -112,12 +116,12 @@ namespace Ubpa::gl {
 		glGetShaderiv(shader, static_cast<GLenum>(pname), params);
 	}
 
-	inline void ReadPixels(GLint x, GLint y, GLsizei width, GLsizei height, PixelDataFormat format, PixelDataType type, void* pixels) {
-		glReadPixels(x, y, width, height, static_cast<GLenum>(format), static_cast<GLenum>(type), pixels);
+	inline void ReadPixels(GLint x, GLint y, size_t width, size_t height, PixelDataFormat format, PixelDataType type, void* pixels) {
+		glReadPixels(x, y, static_cast<GLsizei>(width), static_cast<GLsizei>(height), static_cast<GLenum>(format), static_cast<GLenum>(type), pixels);
 	}
 
-	inline void RenderbufferStorage(FramebufferInternalFormat internalformat, GLsizei width, GLsizei height) {
-		glRenderbufferStorage(GL_RENDERBUFFER, static_cast<GLenum>(internalformat), width, height);
+	inline void RenderbufferStorage(FramebufferInternalFormat internalformat, size_t width, size_t height) {
+		glRenderbufferStorage(GL_RENDERBUFFER, static_cast<GLenum>(internalformat), static_cast<GLsizei>(width), static_cast<GLsizei>(height));
 	}
 
 	inline void StencilFunc(CompareFunc func, GLint ref, GLuint mask) {
@@ -129,20 +133,21 @@ namespace Ubpa::gl {
 	}
 
 	// border must be 0
-	inline void TexImage2D(TextureTarget target, GLint level, PixelDataInternalFormat internalformat, GLsizei width, GLsizei height, PixelDataFormat format, PixelDataType type, const void* pixels) {
-		glTexImage2D(static_cast<GLenum>(target), level, static_cast<GLint>(internalformat), width, height, 0, static_cast<GLenum>(format), static_cast<GLenum>(type), pixels);
+	inline void TexImage2D(TextureTarget target, GLint level, PixelDataInternalFormat internalformat, size_t width, size_t height, PixelDataFormat format, PixelDataType type, const void* pixels) {
+		glTexImage2D(static_cast<GLenum>(target), level, static_cast<GLint>(internalformat), static_cast<GLsizei>(width), static_cast<GLsizei>(height), 0, static_cast<GLenum>(format), static_cast<GLenum>(type), pixels);
 	}
 
 	inline void TexParameteri(TextureType target, TextureParam pname, GLint param) {
 		glTexParameteri(static_cast<GLenum>(target), static_cast<GLenum>(pname), param);
 	}
 
-	inline void VertexAttribPointer(GLuint index, GLint size, DataType type, GLboolean normalized, GLsizei stride, const void* pointer = static_cast<void*>(0)) {
-		glVertexAttribPointer(index, size, static_cast<GLenum>(type), normalized, stride, pointer);
+	inline void VertexAttribPointer(size_t index, size_t size, DataType type, GLboolean normalized, size_t stride, size_t offset = 0) {
+		assert(size > 0 && size <= 4);
+		glVertexAttribPointer(static_cast<GLuint>(index), static_cast<GLint>(size), static_cast<GLenum>(type), normalized, static_cast<GLsizei>(stride), reinterpret_cast<void*>(offset));
 	}
 
-	inline void Viewport(point<GLint, 2> xy, GLsizei width, GLsizei height) {
-		glViewport(xy[0], xy[1], width, height);
+	inline void Viewport(pointi2 xy, size_t width, size_t height) {
+		glViewport(static_cast<GLint>(xy[0]), static_cast<GLint>(xy[1]), static_cast<GLsizei>(width), static_cast<GLsizei>(height));
 	}
 
 	// ================================ original ================================
@@ -293,9 +298,9 @@ namespace Ubpa::gl {
 	}*/
 
 #ifdef GL_VERSION_1_1
-	inline void DrawArrays(GLenum mode, GLint first, GLsizei count) {
+	/*inline void DrawArrays(GLenum mode, GLint first, GLsizei count) {
 		glDrawArrays(mode, first, count);
-	}
+	}*/
 	/*inline void DrawElements(GLenum mode, GLsizei count, GLenum type, const void* indices) {
 		glDrawElements(mode, count, type, indices);
 	}*/
@@ -513,8 +518,8 @@ namespace Ubpa::gl {
 	inline void DisableVertexAttribArray(GLuint index) {
 		glDisableVertexAttribArray(index);
 	}
-	inline void EnableVertexAttribArray(GLuint index) {
-		glEnableVertexAttribArray(index);
+	inline void EnableVertexAttribArray(size_t index) {
+		glEnableVertexAttribArray(static_cast<GLuint>(index));
 	}
 	inline void GetActiveAttrib(GLuint program, GLuint index, GLsizei bufSize, GLsizei* length, GLint* size, GLenum* type, GLchar* name) {
 		glGetActiveAttrib(program, index, bufSize, length, size, type, name);

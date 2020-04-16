@@ -10,24 +10,24 @@ namespace Ubpa::gl {
 	public:
 		struct AttribPointer {
 			const VertexBuffer* vbo;
-			GLint size;
+			size_t size;
 			DataType type;
 			GLboolean normalized;
-			GLsizei stride;
-			const void* pointer;
+			size_t stride;
+			size_t offset;
 		};
 
 	public:
-		VertexBuffer(GLsizeiptr size, const void* data, BufferUsage usage = BufferUsage::StaticDraw);
+		VertexBuffer(size_t size, const void* data, BufferUsage usage = BufferUsage::StaticDraw);
 
 		AttribPointer AttrPtr(
-			GLint size,
+			size_t size,
 			DataType type,
 			GLboolean normalized,
-			GLsizei stride,
-			const void* pointer = (void*)(0)) const noexcept
+			size_t stride,
+			size_t offset = 0) const noexcept
 		{
-			return { this, size, type, normalized, stride, pointer };
+			return { this, size, type, normalized, stride, offset };
 		}
 
 		static GLint MaxVertexAttribs();

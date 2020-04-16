@@ -4,7 +4,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
-#include <UGL/UGL>
+#include <UGL/UGL.h>
 
 #include <iostream>
 
@@ -69,13 +69,9 @@ int main()
         0, 1, 3, // first triangle
         1, 2, 3  // second triangle
     };
-    gl::VertexArray::Format format;
-    gl::VertexBuffer vbo(sizeof(vertices), vertices, gl::BufferUsage::StaticDraw);
-    gl::ElementBuffer ebo(gl::BasicPrimitiveType::Triangles, 2, indices);
-    format.attrptrs.push_back(vbo.AttrPtr(3, gl::DataType::Float, GL_FALSE, 5 * sizeof(GLfloat), (const void*)(0)));
-    format.attrptrs.push_back(vbo.AttrPtr(2, gl::DataType::Float, GL_FALSE, 5 * sizeof(GLfloat), (const void*)(3 * sizeof(float))));
-    format.eb = &ebo;
-    gl::VertexArray vao({ 0,1 }, format);
+    
+    gl::Mesh obj(gl::BasicPrimitiveType::Triangles, 2, 4, indices,
+        vertices, { 3,2 });
 
 
     // load and create a texture 
@@ -117,7 +113,7 @@ int main()
 
         // bind textures on corresponding texture units
         program.Active(0, &texture0);
-        vao.Draw(&program);
+        obj.Draw(program);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------

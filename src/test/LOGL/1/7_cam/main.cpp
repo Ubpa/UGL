@@ -4,7 +4,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
-#include <UGL/UGL>
+#include <UGL/UGL.h>
 #include <UGM/UGM>
 
 #include "../../camera/camera.h"
@@ -23,7 +23,7 @@ const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
 // camera
-Camera camera(pointf3(0.0f, 0.0f, 3.0f));
+Camera camera(pointf3(0.0f, 0.0f, 5.0f));
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
@@ -135,13 +135,10 @@ int main()
         pointf3(1.5f,  0.2f, -1.5f),
         pointf3(-1.3f,  1.0f, -1.5f)
     };
-    gl::VertexArray::Format format;
-    gl::VertexBuffer vbo(sizeof(vertices), vertices, gl::BufferUsage::StaticDraw);
-    gl::ElementBuffer ebo(gl::BasicPrimitiveType::Triangles, 12, indices);
-    format.attrptrs.push_back(vbo.AttrPtr(3, gl::DataType::Float, GL_FALSE, 11 * sizeof(GLfloat), (const void*)(0)));
-    format.attrptrs.push_back(vbo.AttrPtr(2, gl::DataType::Float, GL_FALSE, 11 * sizeof(GLfloat), (const void*)(3 * sizeof(float))));
-    format.eb = &ebo;
-    gl::VertexArray vao({ 0,1 }, format);
+    
+
+    gl::Mesh cube(gl::BasicPrimitiveType::Triangles, 12, 24, indices,
+        vertices, { 3,2,3,3 });
 
 
     // load and create a texture 
@@ -204,7 +201,7 @@ int main()
             float angle = 20.0f * i + 10.f * (float)glfwGetTime();
             transformf model(cubePositions[i], quatf{ vecf3(1.0f, 0.3f, 0.5f), to_radian(angle) });
             program.SetMatf4("model", model);
-            vao.Draw(&program);
+            cube.Draw(program);
         }
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)

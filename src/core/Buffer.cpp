@@ -6,7 +6,7 @@ using namespace Ubpa;
 using namespace Ubpa::gl;
 using namespace std;
 
-Buffer::Buffer(BufferType target, GLsizeiptr size, const void* data, BufferUsage usage)
+Buffer::Buffer(BufferType target, size_t size, const void* data, BufferUsage usage)
 	: target{ target }, usage { usage }
 {
 	gl::GenBuffers(1, id.init_ptr());

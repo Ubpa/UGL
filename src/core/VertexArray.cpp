@@ -23,19 +23,18 @@ void VertexArray::BindReset() {
 	gl::BindVertexArray(0);
 }
 
-VertexArray::VertexArray(const std::vector<GLuint>& indices, const Format& format) noexcept
+VertexArray::VertexArray(const std::vector<size_t>& indices, const Format& format) noexcept
 	: VertexArray{}
 {
 	Attach(indices, format);
 }
 
 VertexArray::VertexArray(VertexArray&& va) noexcept
-	: Obj{ move(va.id) }, eb{ va.eb } {}
+	: Obj{ move(va.id) } {}
 
 VertexArray& VertexArray::operator=(VertexArray&& va) noexcept {
 	Clear();
 	id = move(va.id);
-	eb = va.eb;
 	return *this;
 }
 
@@ -44,50 +43,33 @@ void VertexArray::Clear() {
 	id.Clear();
 }
 
-bool VertexArray::IsValid() const noexcept {
-	return id.IsValid() && eb != nullptr;
-}
-
-void VertexArray::Attach(GLuint idx, const VertexBuffer::AttribPointer& ptr) const {
+void VertexArray::Attach(size_t idx, const VertexBuffer::AttribPointer& ptr) const {
 	Bind();
 	ptr.vbo->Bind();
-	gl::VertexAttribPointer(idx, ptr.size, ptr.type, ptr.normalized, ptr.stride, ptr.pointer);
+	gl::VertexAttribPointer(idx, ptr.size, ptr.type, ptr.normalized, ptr.stride, ptr.offset);
 	gl::EnableVertexAttribArray(idx);
 	BindReset();
 	ptr.vbo->BindReset();
 }
 
-void VertexArray::Attach(const std::vector<GLuint>& indices, const Format& format) {
-	eb = format.eb;
-
+void VertexArray::Attach(const std::vector<size_t>& indices, const Format& format) {
 	assert(indices.size() == format.attrptrs.size());
 	assert(format.eb != nullptr);
 	Bind();
 	for (size_t i = 0; i < indices.size(); i++) {
 		const auto& attrptr = format.attrptrs[i];
 		attrptr.vbo->Bind();
-		gl::VertexAttribPointer(indices[i], attrptr.size, attrptr.type, attrptr.normalized, attrptr.stride, attrptr.pointer);
+		gl::VertexAttribPointer(indices[i], attrptr.size, attrptr.type, attrptr.normalized, attrptr.stride, attrptr.offset);
 		gl::EnableVertexAttribArray(indices[i]);
 	}
-	format.eb->Bind();
 	BindReset();
 	VertexBuffer::BindReset();
 	ElementBuffer::BindReset();
 }
 
-void VertexArray::Attach(const ElementBuffer* eb) {
-	this->eb = eb;
-
+void VertexArray::Attach(const ElementBuffer& eb) {
 	Bind();
-	eb->Bind();
+	eb.Bind();
 	BindReset();
 	ElementBuffer::BindReset();
-}
-
-void VertexArray::Draw(const Program* program) const {
-	assert(IsValid());
-	program->Use();
-	Bind();
-	gl::DrawElements(eb->primitive, eb->numPnts);
-	BindReset();
 }

@@ -4,7 +4,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
-#include <UGL/UGL>
+#include <UGL/UGL.h>
 #include <UGM/UGM>
 
 #include "../../camera/camera.h"
@@ -149,29 +149,16 @@ int main()
         2, 3, 1, 0, 1, 3
     };
     // cube VAO
-    gl::VertexArray::Format cube_format;
-    gl::VertexBuffer cube_vbo(sizeof(cube_vertices), cube_vertices, gl::BufferUsage::StaticDraw);
-    gl::ElementBuffer cube_ebo(gl::BasicPrimitiveType::Triangles, 12, cube_indices);
-    cube_format.attrptrs.push_back(cube_vbo.AttrPtr(3, gl::DataType::Float, GL_FALSE, 11 * sizeof(GLfloat), (const void*)(0)));
-    cube_format.attrptrs.push_back(cube_vbo.AttrPtr(2, gl::DataType::Float, GL_FALSE, 11 * sizeof(GLfloat), (const void*)(3 * sizeof(float))));
-    cube_format.eb = &cube_ebo;
-    gl::VertexArray cube_vao({ 0,1 }, cube_format);
+    gl::Mesh cube(gl::BasicPrimitiveType::Triangles, 12, 24, cube_indices,
+        cube_vertices, { 3,2,3,3 });
+
     // plane VAO
-    gl::VertexArray::Format plane_format;
-    gl::VertexBuffer plane_vbo(sizeof(plane_vertices), plane_vertices, gl::BufferUsage::StaticDraw);
-    gl::ElementBuffer plane_ebo(gl::BasicPrimitiveType::Triangles, 2, plane_indices);
-    plane_format.attrptrs.push_back(plane_vbo.AttrPtr(3, gl::DataType::Float, GL_FALSE, 5 * sizeof(GLfloat), (const void*)(0)));
-    plane_format.attrptrs.push_back(plane_vbo.AttrPtr(2, gl::DataType::Float, GL_FALSE, 5 * sizeof(GLfloat), (const void*)(3 * sizeof(float))));
-    plane_format.eb = &plane_ebo;
-    gl::VertexArray plane_vao({ 0,1 }, plane_format);
+    gl::Mesh plane(gl::BasicPrimitiveType::Triangles, 2, 4, plane_indices,
+        plane_vertices, { 3,2 });
+
     // screen quad VAO
-    gl::VertexArray::Format quad_format;
-    gl::VertexBuffer quad_vbo(sizeof(quad_vertices), quad_vertices, gl::BufferUsage::StaticDraw);
-    gl::ElementBuffer quad_ebo(gl::BasicPrimitiveType::Triangles, 2, quad_indices);
-    quad_format.attrptrs.push_back(quad_vbo.AttrPtr(3, gl::DataType::Float, GL_FALSE, 4 * sizeof(GLfloat), (const void*)(0)));
-    quad_format.attrptrs.push_back(quad_vbo.AttrPtr(2, gl::DataType::Float, GL_FALSE, 4 * sizeof(GLfloat), (const void*)(2 * sizeof(float))));
-    quad_format.eb = &quad_ebo;
-    gl::VertexArray quad_vao({ 0,1 }, quad_format);
+    gl::Mesh quad(gl::BasicPrimitiveType::Triangles, 2, 4, quad_indices,
+        quad_vertices, { 2,2 });
 
     // load textures
     // -------------
@@ -250,13 +237,13 @@ int main()
         // cubes
         obj_program.Active(0, &texture0);
         obj_program.SetMatf4("model", transformf{ pointf3{-1.0f, 0.0f, -1.0f} });
-        cube_vao.Draw(&obj_program);
+        cube.Draw(obj_program);
         obj_program.SetMatf4("model", transformf{ pointf3{2.0f, 0.0f, 0.0f} });
-        cube_vao.Draw(&obj_program);
+        cube.Draw(obj_program);
         
         // floor
         obj_program.SetMatf4("model", transformf::eye());
-        plane_vao.Draw(&obj_program);
+        plane.Draw(obj_program);
 
         // now bind back to default framebuffer and draw a quad plane with the attached framebuffer color texture
         gl::FrameBuffer::BindReset();
@@ -266,7 +253,7 @@ int main()
         gl::Clear(gl::BufferSelectBit::ColorBufferBit);
 
         screen_program.Active(0, &fb_tex); // use the color attachment texture as the texture of the quad plane
-        quad_vao.Draw(&screen_program);
+        quad.Draw(screen_program);
 
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)

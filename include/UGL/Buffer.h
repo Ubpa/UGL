@@ -10,7 +10,7 @@ namespace Ubpa::gl {
 	public:
 		Read<Buffer, BufferUsage> usage;
 
-		Buffer(BufferType target, GLsizeiptr size, const void* data, BufferUsage usage = BufferUsage::StaticDraw);
+		Buffer(BufferType target, size_t size, const void* data, BufferUsage usage = BufferUsage::StaticDraw);
 
 		Buffer(Buffer&& buf) noexcept;
 		Buffer& operator=(Buffer&& buf) noexcept;

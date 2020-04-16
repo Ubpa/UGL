@@ -38,7 +38,7 @@ void RenderBuffer::BindReset() {
 	gl::BindRenderbuffer(static_cast<GLuint>(0));
 }
 
-void RenderBuffer::SetStorage(FramebufferInternalFormat internalformat, GLsizei width, GLsizei height) {
+void RenderBuffer::SetStorage(FramebufferInternalFormat internalformat, size_t width, size_t height) {
 	Bind();
 	gl::RenderbufferStorage(internalformat, width, height);
 	BindReset();

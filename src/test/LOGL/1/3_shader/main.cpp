@@ -1,7 +1,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include <UGL/UGL>
+#include <UGL/UGL.h>
 
 #include <iostream>
 
@@ -64,14 +64,16 @@ int main()
     unsigned int indices[] = {  // note that we start from 0!
         0, 1, 2,  // first Triangle
     };
-    gl::VertexArray::Format format;
+    
+    gl::Mesh tri(gl::BasicPrimitiveType::Triangles, 1, vertices, { 3,3 });
+    /*gl::VertexArray::Format format;
     gl::VertexBuffer vbo(sizeof(vertices), vertices, gl::BufferUsage::StaticDraw);
     gl::ElementBuffer ebo(gl::BasicPrimitiveType::Triangles, 1, indices);
     format.attrptrs.push_back(vbo.AttrPtr(3, gl::DataType::Float, GL_FALSE, 6 * sizeof(GLfloat), (const void*)(0)));
     format.attrptrs.push_back(vbo.AttrPtr(3, gl::DataType::Float, GL_FALSE, 6 * sizeof(GLfloat), (const void*)(3*sizeof(float))));
     format.eb = &ebo;
 
-    gl::VertexArray vao({ 0,1 }, format);
+    gl::VertexArray vao({ 0,1 }, format);*/
 
     // You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
     // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
@@ -92,7 +94,7 @@ int main()
         gl::Clear(gl::BufferSelectBit::ColorBufferBit);
 
         // render the triangle
-        vao.Draw(&program);
+        tri.Draw(program);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------

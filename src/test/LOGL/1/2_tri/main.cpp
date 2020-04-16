@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-#include <UGL/UGL>
+#include <UGL/UGL.h>
 
 using namespace Ubpa;
 
@@ -63,9 +63,9 @@ int main()
 
     // build and compile our shader program
     // ------------------------------------
-    gl::Shader vs(gl::ShaderType::VertexShader, vertexShaderSource);
-    gl::Shader fs(gl::ShaderType::FragmentShader, fragmentShaderSource);
-    gl::Program shaderProgram(&vs, &fs);
+    gl::Shader vs(gl::ShaderType::VertexShader); vs.InitSrc(vertexShaderSource);
+    gl::Shader fs(gl::ShaderType::FragmentShader); fs.InitSrc(fragmentShaderSource);
+    gl::Program program(&vs, &fs);
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
@@ -85,17 +85,9 @@ int main()
         0, 1, 3,  // first Triangle
         1, 2, 3   // second Triangle
     };
-    gl::VertexArray::Format format;
-    gl::VertexBuffer vbo0(sizeof(vertices), vertices, gl::BufferUsage::StaticDraw);
-    gl::VertexBuffer vbo1(sizeof(offset), offset, gl::BufferUsage::StaticDraw);
-    auto attrptr0 = vbo0.AttrPtr(3, gl::DataType::Float, GL_FALSE, 3 * sizeof(float));
-    auto attrptr1 = vbo1.AttrPtr(3, gl::DataType::Float, GL_FALSE, 3 * sizeof(float));
-    gl::ElementBuffer ebo(gl::BasicPrimitiveType::Triangles, 2, indices, gl::BufferUsage::StaticDraw);
-    format.attrptrs.push_back(attrptr0);
-    format.attrptrs.push_back(attrptr1);
-    format.eb = &ebo;
 
-    gl::VertexArray vao({ 0,1 }, format);
+    gl::Mesh obj(gl::BasicPrimitiveType::Triangles, 2, 4, indices,
+        { std::make_tuple(vertices, 3), std::make_tuple(offset, 3) });
 
     // uncomment this call to draw in wireframe polygons.
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -113,7 +105,7 @@ int main()
         gl::ClearColor({ 0.2f, 0.3f, 0.3f, 1.0f });
         gl::Clear(gl::BufferSelectBit::ColorBufferBit);
 
-        vao.Draw(&shaderProgram);
+        obj.Draw(program);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
