@@ -4,7 +4,7 @@ using namespace Ubpa;
 using namespace gl;
 using namespace std;
 
-Mesh::Mesh(BasicPrimitiveType primitiveType, size_t primitiveNum, size_t vertexNum, GLuint* indices,
+Mesh::Mesh(BasicPrimitiveType primitiveType, size_t primitiveNum, size_t vertexNum, const GLuint* indices,
 	// pointer to data, value type, attr size : 1,2,3,4
 	vector<tuple<const void*, DataType, size_t>> vertexattrs)
 	: primitiveType{ primitiveType },
@@ -24,14 +24,14 @@ Mesh::Mesh(BasicPrimitiveType primitiveType, size_t primitiveNum, size_t vertexN
 	va.Attach(*eb);
 }
 
-Mesh::Mesh(BasicPrimitiveType primitiveType, size_t primitiveNum, size_t vertexNum, GLuint* indices,
+Mesh::Mesh(BasicPrimitiveType primitiveType, size_t primitiveNum, size_t vertexNum, const GLuint* indices,
 	// pointer to data, attr size : 1,2,3,4
 	vector<tuple<const float*, size_t>> vertexattrs)
 	: Mesh{ primitiveType,primitiveNum,vertexNum,indices,ConvertPack(vertexattrs) }
 {
 }
 
-Mesh::Mesh(BasicPrimitiveType primitiveType, size_t primitiveNum, size_t vertexNum, GLuint* indices,
+Mesh::Mesh(BasicPrimitiveType primitiveType, size_t primitiveNum, size_t vertexNum, const GLuint* indices,
 	const void* data, DataType dataType, const std::vector<size_t>& attrsizes)
 	: primitiveType{ primitiveType },
 	primitiveNum{ primitiveNum },
@@ -59,7 +59,7 @@ Mesh::Mesh(BasicPrimitiveType primitiveType, size_t primitiveNum, size_t vertexN
 }
 
 
-Mesh::Mesh(BasicPrimitiveType primitiveType, size_t primitiveNum, size_t vertexNum, GLuint* indices,
+Mesh::Mesh(BasicPrimitiveType primitiveType, size_t primitiveNum, size_t vertexNum, const GLuint* indices,
 	const float* data, const std::vector<size_t>& attrsizes)
 	: Mesh{ primitiveType,primitiveNum,vertexNum, indices, data, DataType::Float, attrsizes }
 {

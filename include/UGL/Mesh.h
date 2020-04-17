@@ -14,18 +14,18 @@ namespace Ubpa::gl {
 		Read<Mesh, BasicPrimitiveType> primitiveType;
 		Read<Mesh, size_t> primitiveNum;
 
-		Mesh(BasicPrimitiveType primitiveType, size_t primitiveNum, size_t vertexNum, GLuint* indices, 
+		Mesh(BasicPrimitiveType primitiveType, size_t primitiveNum, size_t vertexNum, const GLuint* indices, 
 			// pointer to data, value type, attr size : 1,2,3,4
 			std::vector<std::tuple<const void*, DataType, size_t>> vertexattrs);
 
-		Mesh(BasicPrimitiveType primitiveType, size_t primitiveNum, size_t vertexNum, GLuint* indices,
+		Mesh(BasicPrimitiveType primitiveType, size_t primitiveNum, size_t vertexNum, const GLuint* indices,
 			// pointer to data, attr size : 1,2,3,4
 			std::vector<std::tuple<const float*, size_t>> vertexattrs);
 
-		Mesh(BasicPrimitiveType primitiveType, size_t primitiveNum, size_t vertexNum, GLuint* indices,
+		Mesh(BasicPrimitiveType primitiveType, size_t primitiveNum, size_t vertexNum, const GLuint* indices,
 			const void* data, DataType dataType, const std::vector<size_t>& attrsizes);
 
-		Mesh(BasicPrimitiveType primitiveType, size_t primitiveNum, size_t vertexNum, GLuint* indices,
+		Mesh(BasicPrimitiveType primitiveType, size_t primitiveNum, size_t vertexNum, const GLuint* indices,
 			const float* data, const std::vector<size_t>& attrsizes);
 
 		Mesh(BasicPrimitiveType primitiveType, size_t primitiveNum,

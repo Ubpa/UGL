@@ -98,7 +98,7 @@ void Program::SetInt(const GLchar* name, GLint v) const {
 		gl::Uniform1i(pos, v);
 }
 
-void Program::SetUInt(const GLchar* name, GLint v) const {
+void Program::SetUInt(const GLchar* name, GLuint v) const {
 	Use();
 	auto pos = GetUniformLocation(name);
 	if (pos != -1)
