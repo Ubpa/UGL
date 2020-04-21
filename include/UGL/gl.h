@@ -4,7 +4,7 @@
 #include "enums.h"
 #include "traits.h"
 
-#include <UGM/UGM>
+#include <UGM/UGM.h>
 
 namespace Ubpa::gl {
 	// ================================ optimize ================================

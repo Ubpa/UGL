@@ -72,7 +72,7 @@ execute_process(
 	WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/config/enums/tools/
 )
 
-Ubpa_AddDep(UGM 0.5.0)
+Ubpa_AddDep(UGM 0.5.1)
 Ubpa_AddDep(UDP 0.3.1)
 
 Ubpa_AddSubDirsRec(include)
