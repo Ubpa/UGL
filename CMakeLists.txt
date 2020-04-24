@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
 
 # 设定项目
-project(UGL VERSION 0.2.0)
+project(UGL VERSION 0.2.1)
 message(STATUS "[Project] ${PROJECT_NAME}")
 
 # 在 Debug 模式下自动对 dll 和 lib 文件名后边加 d，但 exe 仍然需要手动设置
@@ -32,22 +32,22 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 include(FetchContent)
 
-message(STATUS "find package: UCMake v0.4.1")
-find_package(UCMake 0.4.1 QUIET)
+message(STATUS "find package: UCMake 0.4.2")
+find_package(UCMake 0.4.2 QUIET)
 if(${UCMake_FOUND})
-	message(STATUS "UCMake v${UCMake_VERSION} found")
+	message(STATUS "UCMake ${UCMake_VERSION} found")
 else()
 	set(_address "https://github.com/Ubpa/UCMake")
-	message(STATUS "UCMake v0.4.1 not found, so fetch it ...\n"
-	"fetch: ${_address} with tag v0.4.1")
+	message(STATUS "UCMake 0.4.2 not found, so fetch it ...\n"
+	"fetch: ${_address} with tag 0.4.2")
 	FetchContent_Declare(
 	  UCMake
 	  GIT_REPOSITORY ${_address}
-	  GIT_TAG "v0.4.1"
+	  GIT_TAG "0.4.2"
 	)
-	message(STATUS "UCMake v0.4.1 fetch done, building ...")
+	message(STATUS "UCMake 0.4.2 fetch done, building ...")
 	FetchContent_MakeAvailable(UCMake)
-	message(STATUS "UCMake v0.4.1 build done")
+	message(STATUS "UCMake 0.4.2 build done")
 endif()
 
 # 修改默认的安装路径前缀
@@ -72,8 +72,8 @@ execute_process(
 	WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/config/enums/tools/
 )
 
-Ubpa_AddDep(UGM 0.5.1)
-Ubpa_AddDep(UDP 0.3.1)
+Ubpa_AddDep(UGM 0.5.2)
+Ubpa_AddDep(UDP 0.3.2)
 
 Ubpa_AddSubDirsRec(include)
 Ubpa_AddSubDirsRec(data)
