@@ -5,7 +5,7 @@
 #include <stb_image.h>
 
 #include <UGL/UGL.h>
-#include <UGM/UGM>
+#include <UGM/UGM.h>
 
 #include "../../camera/camera.h"
 
